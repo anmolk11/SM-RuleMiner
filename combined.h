@@ -49,35 +49,6 @@ double prob_abc[S_max];       /*prob is a vector holding probabilities of food s
 double solution[D_max];       /*New solution (neighbour) produced by v_{ij}=x_{ij}+\phi_{ij}*(x_{kj}-x_{ij}) j is a randomly chosen parameter and k is a randomlu chosen solution different from i*/
 double GlobalParams[D_max];   /*Parameters of the optimum solution*/
 double GlobalMins_abc[R_max]; /*GlobalMins holds the GlobalMin of each run in multiple runs*/
-// double pi;
-// double E;
-
-// double fun(double x[])
-// {
-    
-//     feval++;
-//     double f =  5 * x[0] - x[0] * x[0] + 2;
-//     return -1 * f;
-    
-// } 
-
-// void initilize_params(int Pr)
-// {
-//     int d;
-//     system("color 70");
-//     if (Pr == 0) // Parabola (Sphere)
-//     {
-//         D = 1;
-//         obj_val = 0;
-//         acc_err = 1.0e-5;
-//         for (d = 0; d < D; d++)
-//         {
-//             lb[d] = -10;
-//             ub[d] = 10;
-//         }
-//     }
-// }
-
 
 void initilize_params(int Pr)
 {

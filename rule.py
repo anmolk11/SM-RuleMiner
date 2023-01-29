@@ -9,7 +9,8 @@ def read_rule(dict):
             print(f"{mn} <= {col[k]} <= {mx} and ")
     print("Then Class = Positive")
 
-    print(f"Score :  {fitness(dict,0)}")
+    
+    #print(f"Score :  {fitness(dict,0)}")
 
 with open("final_rule.txt","r") as file:
     a = [float(x.rstrip()) for x in file]

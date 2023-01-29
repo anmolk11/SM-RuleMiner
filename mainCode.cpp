@@ -45,12 +45,12 @@ double fun(double args[]){
 
     cout<<(itere++)<<' '<<fit<<'\n';
 
-    return -1 *     fit;
+    return -1 * fit;
 }
 
 
 #define Pop_size 50
-#define Max_iterations 10
+#define Max_iterations 3
 #define Total_Run 1
 #define max_part 5
 

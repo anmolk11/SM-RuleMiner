@@ -1,4 +1,5 @@
 import pandas as pd
+import math
 
 df = pd.read_csv("diabetes.csv")
 
@@ -26,6 +27,7 @@ def fitness(spiderMonkey,sign):
         rule_satisfied = True
         for k,v in spiderMonkey.items():
             if v[0] == 1:
+                inside = True
                 mn = min(v[1],v[2])
                 mx = max(v[1],v[2])
                 if df.iloc[i][col[k]] < mn or df.iloc[i][col[k]] > mx:
@@ -41,18 +43,17 @@ def fitness(spiderMonkey,sign):
 
 w1,w2,w3,w4,w5 = 0.5,0.5,0.5,0.2,0.3
 
-import math
 def G_measure_ave(args):
     Tp,Fp = fitness(args,0)
     Tn,Fn = fitness(args,1)
     
-    recall = Tp/(Tp + Fn)
-    precision = Tp/(Tp + Fp)
+    recall = Tp/(Tp + Fn) if Tp > 0 else 0
+    precision = Tp/(Tp + Fp) if Tp > 0 else 0
     
     G_measure_pos = math.sqrt(recall * precision)
     
-    inverse_recall = Tn/(Tn + Fp)
-    inverse_precision = Tn/(Tn + Fn)
+    inverse_recall = Tn/(Tn + Fp) if Tn > 0 else 0
+    inverse_precision = Tn/(Tn + Fn) if Tn > 0 else 0
     
     G_measure_neg = math.sqrt(inverse_recall * inverse_precision)
     
@@ -68,17 +69,28 @@ def Comprehensibility(args):
     for i in range(0,len(args),3):
         num_attr += args[i]
     
-    return (num_attr - 1)/8
+    return (num_attr - 1)/8     
     
     
     
 def novelFitness(args):
+    #print(G_measure_ave(args),MIR(),Comprehensibility(args))
+    atr = 0
+    
+    for i in range(0,len(args),3):
+        atr += args[i]
+    
+    if(atr == 0):
+        return 0.0
+
     return w3 * G_measure_ave(args) + w4 * MIR() - w5 * Comprehensibility(args)
 
 with open("in.txt","r") as file:
-    a = [float(x.rstrip()) for x in file]
+    args = [float(x.rstrip()) for x in file]
     
-fit_score = fitness(a,0)
+fit_score = novelFitness(args)
+
+#print(fit_score)
 
 with open("res.txt","w") as f:
     f.write(str(fit_score))
