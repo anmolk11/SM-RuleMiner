@@ -50,8 +50,8 @@ score = delRows(args,0)
 print(f"Hit score : {score}")
 
 if df.shape[0] > threshold:
-    os.system("g++ mainCode.cpp")
-    os.system("a")
+    os.system("g++ ./mainCode.cpp")
+    os.system("./a")
 else:
     print("\nEnd of the rule minig process\n")
 
