@@ -11,7 +11,7 @@ def makeMonkey(args):
     
     i = 0
     
-    for j in range(0,len(args),3):
+    for j in range(0,24,3):
         monkey[i] = args[j:j+3]
         i += 1
     

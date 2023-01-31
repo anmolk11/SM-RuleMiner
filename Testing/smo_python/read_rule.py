@@ -7,7 +7,7 @@ def read_rule(dict):
     dict = makeMonkey(dict)
     print("If ")
     for k,v in dict.items():
-        if v[0] == 1:
+        if v[0] >= 0.3:
             mx = max(v[1],v[2])
             mn = min(v[1],v[2])
             print(f"{mn} <= {col[k]} <= {mx} and ")

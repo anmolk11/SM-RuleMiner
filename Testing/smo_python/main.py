@@ -257,7 +257,7 @@ if __name__ == "__main__":
     LocalLimit = 200
     GlobalLimit = 80
     run = 0
-    while df.shape[0] > threshold:
+    for run in range(Total_Run):
         initialize()
         GlobalLearning()
         LocalLearning()
@@ -287,9 +287,9 @@ if __name__ == "__main__":
             GlobalMins[run] = GlobalMin
         
         # printVector()
+        print(GlobalLeaderPosition[:24],end="\n\n")
         read_rule(GlobalLeaderPosition)
-        delRows(GlobalLeaderPosition)
-        run += 1
+        # delRows(GlobalLeaderPosition)
 
 
     print("Execution time : ",end=" ")
