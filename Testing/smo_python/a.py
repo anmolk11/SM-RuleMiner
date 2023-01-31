@@ -177,7 +177,6 @@ def LocalLeaderPhase(k):
     
 
 def GlobalLeaderPhase(k):
-    # print("In GlobalLeaderPhase")
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
     i = lo
@@ -187,7 +186,6 @@ def GlobalLeaderPhase(k):
             l += 1
             PopRand = int(random.uniform(0,1) * (hi - lo) + lo)
             while PopRand == i:
-                # print(PopRand)
                 PopRand = int(random.uniform(0,1) * (hi - lo) + lo)
             param2change = int(random.uniform(0,1) * D)
             
@@ -209,7 +207,6 @@ def GlobalLeaderPhase(k):
         i += 1
         if i == hi:
             i = lo
-    # print("Out GlobalLeaderPhase")
 
 def CalculateProbabilities():
     maxfit = fitness[0]
@@ -262,37 +259,26 @@ if __name__ == "__main__":
 
     for run in range(Total_Run):
         initialize()
-        # print("initialize()")
         GlobalLearning()
-        # print("GlobalLearning()")
         LocalLearning()
-        # print("LocalLearning()")
         fevel = 0
         part = 1
         create_group()
-        # print("create_group()")
         cr = 0.1
 
         for iter in range(Max_iterations):
             for k in range(group):
-                # print(k,group)
                 LocalLeaderPhase(k)
-                # print(f"LocalLeaderPhase({k})")
 
             CalculateProbabilities()
 
             for k in range(group):
                 GlobalLeaderPhase(k)
-                # print(f"GlobalLeaderPhase({k})")
             
             GlobalLearning()
-            # print("GlobalLearning()")
             LocalLearning()
-            # print("LocalLearning()")
             LocalLeaderDecision()
-            # print("LocalLeaderPosition()")
             GlobalLeaderDecision()
-            # print("GlobalLeaderDecision()")
 
             if abs(GlobalMin - obj_val) <= acc_err:
                 break
@@ -300,6 +286,5 @@ if __name__ == "__main__":
             cr = cr + 0.4/Max_iterations
             GlobalMins[run] = GlobalMin
 
-#path = C:\Users\admin\Desktop\Work\SM-RuleMiner\Testing\smo_python
 
 

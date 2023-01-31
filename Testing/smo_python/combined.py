@@ -47,14 +47,6 @@ solution = np.zeros(D_max)
 GlobalParams = np.zeros(D_max)
 GlobalMins_abc = np.zeros(R_max)
 
-iter_i = 0
-
-def fun(args):
-    global iter_i
-    print(type(args))
-    iter_i += 1
-    return args[0] * args[0] + 4 * args[0] - 2
-
 def initilize_params(Pr):
     LB = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.078,0.078,0,21,21]
     UB = [1,17,17,1,199,199,1,122,122,1,99,99,1,846,846,1,67.1,67.1,1,2.42,2.42,1,81,81]
