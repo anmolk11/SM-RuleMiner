@@ -1,5 +1,8 @@
 import numpy as np
 import random
+from fitness import fun
+from rule import *
+import time
 
 Pop_size = 50
 Max_iterations = 3
@@ -45,25 +48,17 @@ obj_val = 0
 cr = 0
 
 
-def initilize_params(Pr):
+def initilize_params():
     global obj_val,acc_err,D,lb,ub
     LB = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.078,0.078,0,21,21]
     UB = [1,17,17,1,199,199,1,122,122,1,99,99,1,846,846,1,67.1,67.1,1,2.42,2.42,1,81,81]
+    D = 24
+    obj_val = 0
+    acc_err = 1.0e-5
 
-    if Pr == 0:
-        D = 24
-        obj_val = 0
-        acc_err = 1.0e-5
-
-        for d in range(D):
-            lb[d] = LB[d]
-            ub[d] = UB[d]
-    if Pr == 1:
-        D = 1
-        obj_val = 0
-        acc_err = 1.0e-5
-        lb[0] = -10
-        ub[0] = 10 
+    for d in range(D):
+        lb[d] = LB[d]
+        ub[d] = UB[d]
 
 def CalculateFitness(fun):
     result = 0
@@ -73,13 +68,6 @@ def CalculateFitness(fun):
         result = 1 + abs(fun)
 
     return result
-
-def fun(args):
-    global fevel
-    fevel += 1
-    s = args[0] * args[0] + 4 * args[0] - 2
-    # print(fevel,s)
-    return s
 
 def create_group():
     g = 0
@@ -144,9 +132,9 @@ def initialize():
     GlobalLimitCount = 0
 
     for k in range(group):
-        LocalMin[k] = fun_val[gpoint[k][0]]
+        LocalMin[k] = fun_val[int(gpoint[k][0])]
         LocalLimitCount[k] = 0
-        LocalLeaderPosition[k] = Population[gpoint[k][0]]
+        LocalLeaderPosition[k] = Population[int(gpoint[k][0])]
 
 def LocalLeaderPhase(k):
     global lo,hi,cr
@@ -252,8 +240,17 @@ def GlobalLeaderDecision():
             create_group()
             LocalLearning()
 
+
+def printVector():
+    for i in range(0,D):
+        if(i % 3 == 2):
+            print(GlobalLeaderPosition[i])
+        else:
+            print(GlobalLeaderPosition[i],end="   ")
+
 if __name__ == "__main__":
-    initilize_params(1)
+    start_time = time.time()
+    initilize_params()
     LocalLimit = D * Pop_size
     GlobalLimit = Pop_size
 
@@ -285,6 +282,15 @@ if __name__ == "__main__":
 
             cr = cr + 0.4/Max_iterations
             GlobalMins[run] = GlobalMin
+        
+        printVector()
+        read_rule(GlobalLeaderPosition)
+
+
+    print("Execution time : ",end=" ")
+    print(" %s seconds " % (time.time() - start_time))
+    
+        
 
 
 
