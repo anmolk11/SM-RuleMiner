@@ -1,10 +1,69 @@
-from combined import *
+import numpy as np
 import random
 
 Pop_size = 50
 Max_iterations = 3
 Total_Run = 1
 max_part = 5
+
+D_max = 200
+S_max = 200
+R_max = 200
+
+D = 0
+LocalLimit = 0
+GlobalLimit = 0
+limit = 0
+
+Population = np.zeros((S_max,D_max))
+fun_val = np.zeros(S_max)
+fitness = np.zeros(S_max)
+prob = np.zeros(S_max)
+new_position = np.zeros(D_max)
+ObjValSol = 0
+FitnessSol = 0
+neighbour = 0
+param2change = 0
+GlobalMin = 0
+GlobalLeaderPosition = np.zeros(D_max)
+LocalMin = np.zeros(S_max//2)
+LocalLeaderPosition = np.zeros((S_max//2,D_max))
+LocalLimitCount = np.zeros(S_max//2)
+GlobalMins = np.zeros(R_max)
+GlobalLimitCount = 0
+gpoint = np.zeros((S_max,2))
+r,r1,r2 = 0,0,0
+Pr = 0
+part = 0
+acc_err = 0
+lb = np.zeros(D_max)
+ub = np.zeros(D_max)
+fevel = 0
+
+lo,hi,group,iter = 0,0,0,0
+obj_val = 0
+cr = 0
+
+
+def initilize_params(Pr):
+    global obj_val,acc_err,D,lb,ub
+    LB = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.078,0.078,0,21,21]
+    UB = [1,17,17,1,199,199,1,122,122,1,99,99,1,846,846,1,67.1,67.1,1,2.42,2.42,1,81,81]
+
+    if Pr == 0:
+        D = 24
+        obj_val = 0
+        acc_err = 1.0e-5
+
+        for d in range(D):
+            lb[d] = LB[d]
+            ub[d] = UB[d]
+    if Pr == 1:
+        D = 1
+        obj_val = 0
+        acc_err = 1.0e-5
+        lb[0] = -10
+        ub[0] = 10 
 
 def CalculateFitness(fun):
     result = 0
@@ -15,10 +74,16 @@ def CalculateFitness(fun):
 
     return result
 
+def fun(args):
+    global fevel
+    fevel += 1
+    s = args[0] * args[0] + 4 * args[0] - 2
+    # print(fevel,s)
+    return s
+
 def create_group():
-    global lo,hi
-    global group
     g = 0
+    global lo,hi,gpoint,group
     while lo < Pop_size:
         hi = lo + Pop_size//part
         gpoint[g][0] = lo
@@ -28,11 +93,11 @@ def create_group():
             gpoint[g][1] = Pop_size - 1
         
         g += 1
-        group = g
         lo = hi + 1
+    group = g
 
 def GlobalLearning():
-    global GlobalMin
+    global GlobalMin,GlobalLimitCount
     G_trial = GlobalMin
     for i in range(Pop_size):
         if fun_val[i] < GlobalMin:
@@ -51,7 +116,7 @@ def LocalLearning():
         OldMin[k] = LocalMin[k]
 
     for k in range(group):
-        for i in range(gpoint[k][0], gpoint[k][1] + 1):
+        for i in range(int(gpoint[k][0]), int(gpoint[k][1]) + 1):
             if fun_val[i] < LocalMin[k]:
                 LocalMin[k] = fun_val[i]
                 for j in range(D):
@@ -84,12 +149,13 @@ def initialize():
         LocalLeaderPosition[k] = Population[gpoint[k][0]]
 
 def LocalLeaderPhase(k):
+    global lo,hi,cr
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
     for i in range(lo, hi + 1):
         PopRand = i
         while PopRand == i:
-            PopRand = int(random.uniform(lo, hi))
+            PopRand = int(random.uniform(0, 1) * (hi - lo) + lo)
 
         for j in range(D):
             if random.uniform(0, 1) >= cr:
@@ -108,20 +174,26 @@ def LocalLeaderPhase(k):
                 Population[i][j] = new_position[j]
             fun_val[i] = ObjValSol
             fitness[i] = FitnessSol
+    
 
 def GlobalLeaderPhase(k):
+    # print("In GlobalLeaderPhase")
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
     i = lo
     l = lo
     while l < hi:
-        if random.random() < prob[i]:
+        if random.uniform(0,1) < prob[i]:
             l += 1
-            PopRand = lo + int(random.random() * (hi - lo))
+            PopRand = int(random.uniform(0,1) * (hi - lo) + lo)
             while PopRand == i:
-                PopRand = lo + int(random.random() * (hi - lo))
-            param2change = int(random.random() * D)
-            new_position = [x for x in Population[i]]
+                # print(PopRand)
+                PopRand = int(random.uniform(0,1) * (hi - lo) + lo)
+            param2change = int(random.uniform(0,1) * D)
+            
+            for j in range(D):
+                new_position[j] = Population[i][j]
+
             new_position[param2change] = Population[i][param2change] + (GlobalLeaderPosition[param2change] - Population[i][param2change]) * (random.random()) + (Population[PopRand][param2change] - Population[i][param2change]) * (random.random() - 0.5) * 2
             if new_position[param2change] < lb[param2change]:
                 new_position[param2change] = lb[param2change]
@@ -130,12 +202,14 @@ def GlobalLeaderPhase(k):
             ObjValSol = fun(new_position)
             FitnessSol = CalculateFitness(ObjValSol)
             if FitnessSol > fitness[i]:
-                Population[i] = new_position
+                for j in range(D):
+                    Population[i][j] = new_position[j]
                 fun_val[i] = ObjValSol
                 fitness[i] = FitnessSol
         i += 1
         if i == hi:
             i = lo
+    # print("Out GlobalLeaderPhase")
 
 def CalculateProbabilities():
     maxfit = fitness[0]
@@ -147,7 +221,28 @@ def CalculateProbabilities():
         prob[i] = 0.9 * (fitness[i] / maxfit) + 0.1
 
 
+def LocalLeaderDecision():
+    for k in range(group):
+        if LocalLimitCount[k] > LocalLimit:
+            for i in range(gpoint[k][0], gpoint[k][1]+1):
+                for j in range(D):
+                    if random.uniform(0, 1) >= cr:
+                        Population[i][j] = random.uniform(lb[j], ub[j])
+                    else:
+                        Population[i][j] = Population[i][j] + (GlobalLeaderPosition[j] - Population[i][j]) * random.uniform(0, 1) + (Population[i][j] - LocalLeaderPosition[k][j]) * random.uniform(0, 1)
+                    if Population[i][j] < lb[j]:
+                        Population[i][j] = lb[j]
+                    if Population[i][j] > ub[j]:
+                        Population[i][j] = ub[j]
+
+                fun_val[i] = fun(Population[i])
+                fitness[i] = CalculateFitness(fun_val[i])
+
+            LocalLimitCount[k] = 0
+
+
 def GlobalLeaderDecision():
+    global GlobalLimitCount
     if GlobalLimitCount > GlobalLimit:
         GlobalLimitCount = 0
 
@@ -167,24 +262,37 @@ if __name__ == "__main__":
 
     for run in range(Total_Run):
         initialize()
+        # print("initialize()")
         GlobalLearning()
+        # print("GlobalLearning()")
         LocalLearning()
+        # print("LocalLearning()")
         fevel = 0
         part = 1
         create_group()
+        # print("create_group()")
         cr = 0.1
 
         for iter in range(Max_iterations):
             for k in range(group):
+                # print(k,group)
                 LocalLeaderPhase(k)
-            
+                # print(f"LocalLeaderPhase({k})")
+
+            CalculateProbabilities()
+
             for k in range(group):
                 GlobalLeaderPhase(k)
+                # print(f"GlobalLeaderPhase({k})")
             
             GlobalLearning()
+            # print("GlobalLearning()")
             LocalLearning()
-            LocalLeaderPosition()
+            # print("LocalLearning()")
+            LocalLeaderDecision()
+            # print("LocalLeaderPosition()")
             GlobalLeaderDecision()
+            # print("GlobalLeaderDecision()")
 
             if abs(GlobalMin - obj_val) <= acc_err:
                 break
@@ -192,6 +300,6 @@ if __name__ == "__main__":
             cr = cr + 0.4/Max_iterations
             GlobalMins[run] = GlobalMin
 
-    print(GlobalLeaderPosition)            
+#path = C:\Users\admin\Desktop\Work\SM-RuleMiner\Testing\smo_python
 
 
