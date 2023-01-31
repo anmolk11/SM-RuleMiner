@@ -1,10 +1,9 @@
 from fitness import *
 import os
 
-threshold = 30
 def read_rule(dict):
     print("\n------------------------------------------------\n")
-    print(f"\nScore : {-1 * fun(dict)}\n")
+    # print(f"\nScore : {-1 * fun(dict)}\n")
     dict = makeMonkey(dict)
     print("If ")
     for k,v in dict.items():
@@ -16,7 +15,7 @@ def read_rule(dict):
     
     print("\n------------------------------------------------\n")
 
-def delRows(args,sign):
+def delRows(args,sign = 0):
     drop_ind = []
     args = makeMonkey(args)
     score = 0

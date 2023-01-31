@@ -1,13 +1,14 @@
 import numpy as np
 import random
 from fitness import fun
-from rule import *
+from read_rule import *
 import time
 
-Pop_size = 50
+threshold = 30
+Pop_size = 80
 Max_iterations = 3
 Total_Run = 1
-max_part = 5
+max_part = 6
 
 D_max = 200
 S_max = 200
@@ -242,26 +243,28 @@ def GlobalLeaderDecision():
 
 
 def printVector():
+    print("\n-----------------------------------------------------------\n")
     for i in range(0,D):
         if(i % 3 == 2):
             print(GlobalLeaderPosition[i])
         else:
             print(GlobalLeaderPosition[i],end="   ")
+    print("\n-----------------------------------------------------------\n")
 
 if __name__ == "__main__":
     start_time = time.time()
     initilize_params()
-    LocalLimit = D * Pop_size
-    GlobalLimit = Pop_size
-
-    for run in range(Total_Run):
+    LocalLimit = 200
+    GlobalLimit = 80
+    run = 0
+    while df.shape[0] > threshold:
         initialize()
         GlobalLearning()
         LocalLearning()
         fevel = 0
         part = 1
         create_group()
-        cr = 0.1
+        cr = 0.3
 
         for iter in range(Max_iterations):
             for k in range(group):
@@ -283,8 +286,10 @@ if __name__ == "__main__":
             cr = cr + 0.4/Max_iterations
             GlobalMins[run] = GlobalMin
         
-        printVector()
+        # printVector()
         read_rule(GlobalLeaderPosition)
+        delRows(GlobalLeaderPosition)
+        run += 1
 
 
     print("Execution time : ",end=" ")

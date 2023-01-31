@@ -71,51 +71,48 @@ def Comprehensibility(args):
     
     return (num_attr - 1)/8     
     
-    
-"""    
 def fun(args):
     rule = np.zeros(24)
+    atr = 0
     for i in range(0,24):
         if i % 3 == 0:
             if args[i] >= 0.3:
+                atr += 1
                 rule[i] = 1
             else:
                 rule[i] = 0
         else:
             rule[i] = args[i] 
 
-    atr = 0
-
-    for i in range(0,len(rule),3):
-        atr += args[i]
     
     if(atr == 0):
         return 0.0
 
     fit_score = w3 * G_measure_ave(rule) + w4 * MIR() - w5 * Comprehensibility(rule)
 
-    print(fit_score)
+    # print(fit_score)
 
     return -1 * fit_score
-"""
-def fun(spiderMonkey,sign = 0):
-    
-    spiderMonkey = makeMonkey(spiderMonkey)
-    
-    hits = 0
-    
-    for i in range(0,df.shape[0]):
-        ok = True
-        inside = False
-        for k,v in spiderMonkey.items():
-            if v[0] == 1:
-                inside = True
-                if df.iloc[i][col[k]] < v[1] or df.iloc[i][col[k]] > v[2]:
-                    ok = False
-                    break
-        if ok and df.iloc[i]["Outcome"] == sign and inside:
-            hits += 1
 
-    print(hits)
 
-    return -1 * hits
+# def fun(spiderMonkey,sign = 0):
+    
+#     spiderMonkey = makeMonkey(spiderMonkey)
+    
+#     hits = 0
+    
+#     for i in range(0,df.shape[0]):
+#         ok = True
+#         inside = False
+#         for k,v in spiderMonkey.items():
+#             if v[0] == 1:
+#                 inside = True
+#                 if df.iloc[i][col[k]] < v[1] or df.iloc[i][col[k]] > v[2]:
+#                     ok = False
+#                     break
+#         if ok and df.iloc[i]["Outcome"] == sign and inside:
+#             hits += 1
+
+#     # print(hits)
+
+#     return -1 * hits
