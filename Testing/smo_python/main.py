@@ -3,6 +3,7 @@ import random
 from fitness import fun
 from read_rule import *
 import time
+import os
 
 threshold = 30
 Pop_size = 80
@@ -252,12 +253,13 @@ def printVector():
     print("\n-----------------------------------------------------------\n")
 
 if __name__ == "__main__":
-    start_time = time.time()
+    os.remove("rules.txt")
     initilize_params()
     LocalLimit = 200
     GlobalLimit = 80
     run = 0
-    while df.shape[0] > threshold:
+    while df[df["Outcome"] == 0].shape[0] > threshold:
+        start_time = time.time()
         initialize()
         GlobalLearning()
         LocalLearning()
@@ -288,13 +290,17 @@ if __name__ == "__main__":
         
         # printVector()
         # print(GlobalLeaderPosition[:24],end="\n\n")
+        print(f"Data set size : {df.shape[0]}\n")
         read_rule(GlobalLeaderPosition)
-        delRows(GlobalLeaderPosition)
-
-
-    print("Execution time : ",end=" ")
-    print(" %s seconds " % (time.time() - start_time))
+        score = delRows(GlobalLeaderPosition)
+        print(f"Hits scored : {score}")
+        print("\n---------------------------------\n")
+        print("Execution time : ",end=" ")
+        print(" %s seconds " % (time.time() - start_time))
+        print("\n---------------------------------\n")
     
+    print("End of Mining task")
+
         
 
 

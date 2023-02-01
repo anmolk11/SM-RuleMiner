@@ -2,6 +2,8 @@ import pandas as pd
 import numpy as np
 import math
 
+cutoff = 0.3
+
 df = pd.read_csv("diabetes.csv")
 
 col = df.columns.tolist()
@@ -26,7 +28,7 @@ def fitness(spiderMonkey,sign):
     for i in range(0,df.shape[0]):
         rule_satisfied = True
         for k,v in spiderMonkey.items():
-            if v[0] == 1:
+            if v[0] >= cutoff:
                 inside = True
                 mn = min(v[1],v[2])
                 mx = max(v[1],v[2])
@@ -67,28 +69,21 @@ def Comprehensibility(args):
     num_attr = 0
     
     for i in range(0,len(args),3):
-        num_attr += args[i]
+        num_attr += (1 if args[i] >= cutoff else 0)
     
     return (num_attr - 1)/8     
     
 def fun(args):
-    rule = np.zeros(24)
     atr = 0
     for i in range(0,24):
         if i % 3 == 0:
-            if args[i] >= 0.3:
-                atr += 1
-                rule[i] = 1
-            else:
-                rule[i] = 0
-        else:
-            rule[i] = args[i] 
+            if args[i] >= cutoff:
+                atr += 1 
 
-    
     if(atr == 0):
         return 0.0
 
-    fit_score = w3 * G_measure_ave(rule) + w4 * MIR() - w5 * Comprehensibility(rule)
+    fit_score = w3 * G_measure_ave(args) + w4 * MIR() - w5 * Comprehensibility(args)
 
     # print(fit_score)
 
