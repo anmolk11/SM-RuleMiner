@@ -68,12 +68,12 @@ def MIR():
 def Comprehensibility(args):
     num_attr = 0
     
-    for i in range(0,len(args),3):
+    for i in range(0,24,3):
         num_attr += (1 if args[i] >= cutoff else 0)
     
     return (num_attr - 1)/8     
     
-def fun(args):
+def fun(args,sign = 0):
     atr = 0
     for i in range(0,24):
         if i % 3 == 0:
