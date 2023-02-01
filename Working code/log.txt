@@ -1,0 +1,3 @@
+Rule mining is working for 0 class.
+
+Need to work on genrating rules from both classes.
