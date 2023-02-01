@@ -253,7 +253,10 @@ def printVector():
     print("\n-----------------------------------------------------------\n")
 
 if __name__ == "__main__":
-    os.remove("rules.txt")
+    try:
+        os.remove("rules.txt")
+    except OSError:
+        pass
     initilize_params()
     LocalLimit = 200
     GlobalLimit = 80
