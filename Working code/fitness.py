@@ -2,16 +2,17 @@ import pandas as pd
 import numpy as np
 import math
 
-cutoff = 0.3
+cutoff = 0.5
 
-df = pd.read_csv("diabetes.csv")
+df_pos = pd.read_csv("positive.csv")
+df_neg = pd.read_csv("negative.csv")
 
-col = df.columns.tolist()
+col = df_pos.columns.tolist()
 
 def makeMonkey(args):
     monkey = {}
     
-    i = 0
+    i = 1
     
     for j in range(0,24,3):
         monkey[i] = args[j:j+3]
@@ -20,19 +21,25 @@ def makeMonkey(args):
     return monkey
 
 def fitness(spiderMonkey,sign):
-    
     spiderMonkey = makeMonkey(spiderMonkey)
     
     T,F = 0,0
     
-    for i in range(0,df.shape[0]):
+    df = pd.DataFrame()
+
+    if sign == 0:
+        df = df_neg
+    else:
+        df = df_pos
+
+    for ind,row in df.iterrows():
         rule_satisfied = True
         for k,v in spiderMonkey.items():
             if v[0] >= cutoff:
                 inside = True
                 mn = min(v[1],v[2])
                 mx = max(v[1],v[2])
-                if df.iloc[i][col[k]] < mn or df.iloc[i][col[k]] > mx:
+                if row[col[k]] < mn or row[col[k]] > mx:
                     rule_satisfied = False
                     break
         if rule_satisfied: 
@@ -68,12 +75,12 @@ def MIR():
 def Comprehensibility(args):
     num_attr = 0
     
-    for i in range(0,len(args),3):
+    for i in range(0,24,3):
         num_attr += (1 if args[i] >= cutoff else 0)
     
     return (num_attr - 1)/8     
     
-def fun(args):
+def fun(args,sign = 0):
     atr = 0
     for i in range(0,24):
         if i % 3 == 0:
@@ -111,3 +118,20 @@ def fun(args):
 #     # print(hits)
 
 #     return -1 * hits
+
+# def fun(spiderMonkey,sign = 0):
+#     hits = 0
+#     spiderMonkey = makeMonkey(spiderMonkey)
+#     for ind,row in df.iterrows():
+#         rule_satisfied = True
+#         inside = False
+#         for k,v in spiderMonkey.items():
+#             if v[0] >= cutoff:
+#                 inside = True
+#                 if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
+#                     rule_satisfied = False
+#                     break
+#         if inside and rule_satisfied and row["Outcome"] == sign:
+#             hits += 1
+
+#         return -1 * hits

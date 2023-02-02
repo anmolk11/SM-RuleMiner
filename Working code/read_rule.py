@@ -1,44 +1,56 @@
 from fitness import *
 import os
 
-def read_rule(dict):
+num_rule = 1
+
+def delRows(args,sign,displayRules = True):
+    df = pd.DataFrame()
+    if sign == 0:
+        df = df_neg
+    else:
+        df = df_pos
+
+    global num_rule
     file = open("rules.txt","a")
-    # print("\n------------------------------------------------\n")
-    # print(f"\nScore : {-1 * fun(dict)}\n")
-    print("\n\n")
-    dict = makeMonkey(dict)
-    print("If ")
-    for k,v in dict.items():
-        if v[0] >= 0.3:
+    file.write(f"Rule num : {num_rule}\n")
+    file.write(f"Class : {sign}\n")
+    num_rule += 1
+    # print("\n\n")
+    args = makeMonkey(args)
+    # print("If ")
+    for k,v in args.items():
+        if v[0] >= cutoff:
             mx = max(v[1],v[2])
             mn = min(v[1],v[2])
-            print(f"{mn} <= {col[k]} <= {mx} \n")
+            if displayRules:
+                 print(f"{mn} <= {col[k]} <= {mx} \n")
             file.write(f"{mn} <= {col[k]} <= {mx} \n")
-    print("Then Class = Positive")
-    print("\n")
-    file.write("\n--------------\n")
-    # print("\n------------------------------------------------\n")
+    if displayRules:
+        if(sign == 1):
+            print("Then Class = Positive")
+        else:
+            print("Then Class = Negative")
+        print("\n")
 
-def delRows(args,sign = 0):
     drop_ind = []
-    args = makeMonkey(args)
     score = 0
-    index = df.index.tolist()
-    for i in index:
+    for ind,row in df.iterrows():
         rule_satisfied = True
         for k,v in args.items():
-            if v[0] >= 0.3:
+            if v[0] >= cutoff:
                 mn = min(v[1],v[2])
                 mx = max(v[1],v[2])
 
-                if df.loc[i][col[k]] < mn or df.loc[i][col[k]] > mx:
+                if row[col[k]] < mn or row[col[k]] > mx:
                     rule_satisfied = False
                     break
-        if rule_satisfied and df.loc[i]["Outcome"] == sign:
+        if rule_satisfied and row["Outcome"] == sign:
             score += 1
-            drop_ind.append(i)
+            drop_ind.append(ind)
 
     df.drop(drop_ind,axis = 0,inplace = True)
+    file.write(f"Hits scored : {score}\n")
+    file.write("\n--------------\n")
     return score
 
 

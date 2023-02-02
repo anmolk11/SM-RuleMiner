@@ -50,10 +50,10 @@ obj_val = 0
 cr = 0
 
 
-def initilize_params():
-    global obj_val,acc_err,D,lb,ub
-    LB = [0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0.078,0.078,0,21,21]
-    UB = [1,17,17,1,199,199,1,122,122,1,99,99,1,846,846,1,67.1,67.1,1,2.42,2.42,1,81,81]
+def initilize_params(sign):
+    global obj_val,acc_err,D,lb,ub,max_part,LocalLimit,cr,GlobalLimit
+    LB = [0,0,0,    0,0,0,      0,0,0,      0,0,0,      0,0,0,      0,0,0,          0,0.078,0.078,  0,21,21]
+    UB = [1,17,17,  1,199,199,  1,122,122,  1,99,99,    1,846,846,  1,67.1,67.1,    1,2.42,2.42,    1,81,81]
     D = 24
     obj_val = 0
     acc_err = 1.0e-5
@@ -61,6 +61,18 @@ def initilize_params():
     for d in range(D):
         lb[d] = LB[d]
         ub[d] = UB[d]
+    
+    if sign == 0:
+        LocalLimit = 400
+        GlobalLimit = 80
+        cr = 0.2
+        max_part = 4
+    else:
+        LocalLimit = 200
+        GlobalLimit = 80
+        cr = 0.2
+        max_part = 6
+
 
 def CalculateFitness(fun):
     result = 0
@@ -257,54 +269,58 @@ if __name__ == "__main__":
         os.remove("rules.txt")
     except OSError:
         pass
-    initilize_params()
-    LocalLimit = 200
-    GlobalLimit = 80
+    main_time = time.time()
+    
+    
     run = 0
-    while df[df["Outcome"] == 0].shape[0] > threshold:
-        start_time = time.time()
-        initialize()
-        GlobalLearning()
-        LocalLearning()
-        fevel = 0
-        part = 1
-        create_group()
-        cr = 0.3
-
-        for iter in range(Max_iterations):
-            for k in range(group):
-                LocalLeaderPhase(k)
-
-            CalculateProbabilities()
-
-            for k in range(group):
-                GlobalLeaderPhase(k)
-            
+    classes = [0,1]
+    for cat in classes:
+        initilize_params(cat)
+        df = pd.DataFrame()
+        if(cat == 0):
+            df = df_neg
+        else:
+            df = df_pos
+        print(f"Mining for Classs : {cat}\n\n")
+        while df[df["Outcome"] == cat].shape[0] > threshold:
+            start_time = time.time()
+            initialize()
             GlobalLearning()
             LocalLearning()
-            LocalLeaderDecision()
-            GlobalLeaderDecision()
+            fevel = 0
+            part = 1
+            create_group()
 
-            if abs(GlobalMin - obj_val) <= acc_err:
-                break
+            for iter in range(Max_iterations):
+                for k in range(group):
+                    LocalLeaderPhase(k)
 
-            cr = cr + 0.4/Max_iterations
-            GlobalMins[run] = GlobalMin
-        
-        # printVector()
-        # print(GlobalLeaderPosition[:24],end="\n\n")
-        print(f"Data set size : {df.shape[0]}\n")
-        read_rule(GlobalLeaderPosition)
-        score = delRows(GlobalLeaderPosition)
-        print(f"Hits scored : {score}")
-        print("\n---------------------------------\n")
-        print("Execution time : ",end=" ")
-        print(" %s seconds " % (time.time() - start_time))
-        print("\n---------------------------------\n")
+                CalculateProbabilities()
+
+                for k in range(group):
+                    GlobalLeaderPhase(k)
+                
+                GlobalLearning()
+                LocalLearning()
+                LocalLeaderDecision()
+                GlobalLeaderDecision()
+
+                if abs(GlobalMin - obj_val) <= acc_err:
+                    break
+
+                cr = cr + 0.4/Max_iterations
+                GlobalMins[run] = GlobalMin
+            
+            # printVector()
+            # print(GlobalLeaderPosition[:24],end="\n\n")
+            print(f"\nData set size : {df.shape[0]}\n")
+            score = delRows(GlobalLeaderPosition,cat,displayRules = False)
+            print(f"Hits scored : {score}")
+            # print("\n---------------------------------\n")
+            # print("Execution time : ",end=" ")
+            # print(" %s seconds " % (time.time() - start_time))
+            # print("\n---------------------------------\n")
     
-    print("End of Mining task")
-
-        
-
-
-
+    print("\n\nEnd of Mining task")
+    print("Total execution time : ",end = " ")
+    print(" %s seconds " % (time.time() - main_time),end = "\n\n")
