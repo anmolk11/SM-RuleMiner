@@ -1,28 +1,36 @@
 from fitness import *
 import os
 
-num_rule = 0
+num_rule = 1
 
-def delRows(args,sign = 0):
+def delRows(args,sign,displayRules = True):
+    df = pd.DataFrame()
+    if sign == 0:
+        df = df_neg
+    else:
+        df = df_pos
+
     global num_rule
     file = open("rules.txt","a")
     file.write(f"Rule num : {num_rule}\n")
     file.write(f"Class : {sign}\n")
     num_rule += 1
-    print("\n\n")
+    # print("\n\n")
     args = makeMonkey(args)
-    print("If ")
+    # print("If ")
     for k,v in args.items():
         if v[0] >= cutoff:
             mx = max(v[1],v[2])
             mn = min(v[1],v[2])
-            print(f"{mn} <= {col[k]} <= {mx} \n")
+            if displayRules:
+                 print(f"{mn} <= {col[k]} <= {mx} \n")
             file.write(f"{mn} <= {col[k]} <= {mx} \n")
-    if(sign == 1):
-        print("Then Class = Positive")
-    else:
-        print("Then Class = Negative")
-    print("\n")
+    if displayRules:
+        if(sign == 1):
+            print("Then Class = Positive")
+        else:
+            print("Then Class = Negative")
+        print("\n")
 
     drop_ind = []
     score = 0

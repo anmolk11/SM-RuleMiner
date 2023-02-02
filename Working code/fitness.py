@@ -4,14 +4,15 @@ import math
 
 cutoff = 0.5
 
-df = pd.read_csv("diabetes.csv")
+df_pos = pd.read_csv("positive.csv")
+df_neg = pd.read_csv("negative.csv")
 
-col = df.columns.tolist()
+col = df_pos.columns.tolist()
 
 def makeMonkey(args):
     monkey = {}
     
-    i = 0
+    i = 1
     
     for j in range(0,24,3):
         monkey[i] = args[j:j+3]
@@ -20,11 +21,17 @@ def makeMonkey(args):
     return monkey
 
 def fitness(spiderMonkey,sign):
-    
     spiderMonkey = makeMonkey(spiderMonkey)
     
     T,F = 0,0
     
+    df = pd.DataFrame()
+
+    if sign == 0:
+        df = df_neg
+    else:
+        df = df_pos
+
     for ind,row in df.iterrows():
         rule_satisfied = True
         for k,v in spiderMonkey.items():
