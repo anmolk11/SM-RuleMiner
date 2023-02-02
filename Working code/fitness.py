@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import math
 
-cutoff = 0.3
+cutoff = 0.5
 
 df = pd.read_csv("diabetes.csv")
 
@@ -25,14 +25,14 @@ def fitness(spiderMonkey,sign):
     
     T,F = 0,0
     
-    for i in range(0,df.shape[0]):
+    for ind,row in df.iterrows():
         rule_satisfied = True
         for k,v in spiderMonkey.items():
             if v[0] >= cutoff:
                 inside = True
                 mn = min(v[1],v[2])
                 mx = max(v[1],v[2])
-                if df.iloc[i][col[k]] < mn or df.iloc[i][col[k]] > mx:
+                if row[col[k]] < mn or row[col[k]] > mx:
                     rule_satisfied = False
                     break
         if rule_satisfied: 
@@ -111,3 +111,20 @@ def fun(args,sign = 0):
 #     # print(hits)
 
 #     return -1 * hits
+
+# def fun(spiderMonkey,sign = 0):
+#     hits = 0
+#     spiderMonkey = makeMonkey(spiderMonkey)
+#     for ind,row in df.iterrows():
+#         rule_satisfied = True
+#         inside = False
+#         for k,v in spiderMonkey.items():
+#             if v[0] >= cutoff:
+#                 inside = True
+#                 if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
+#                     rule_satisfied = False
+#                     break
+#         if inside and rule_satisfied and row["Outcome"] == sign:
+#             hits += 1
+
+#         return -1 * hits

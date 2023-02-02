@@ -257,6 +257,7 @@ if __name__ == "__main__":
         os.remove("rules.txt")
     except OSError:
         pass
+    main_time = time.time()
     initilize_params()
     LocalLimit = 200
     GlobalLimit = 80
@@ -294,7 +295,6 @@ if __name__ == "__main__":
         # printVector()
         # print(GlobalLeaderPosition[:24],end="\n\n")
         print(f"Data set size : {df.shape[0]}\n")
-        read_rule(GlobalLeaderPosition)
         score = delRows(GlobalLeaderPosition)
         print(f"Hits scored : {score}")
         print("\n---------------------------------\n")
@@ -303,8 +303,5 @@ if __name__ == "__main__":
         print("\n---------------------------------\n")
     
     print("End of Mining task")
-
-        
-
-
-
+    print("Total execution time : ",end = " ")
+    print(" %s seconds " % (time.time() - main_time),end = "\n\n")
