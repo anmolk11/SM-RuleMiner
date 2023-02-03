@@ -4,6 +4,9 @@ from fitness import fun
 from read_rule import *
 import time
 import os
+from sklearn.model_selection import train_test_split
+from test import accuracy
+
 
 threshold = 30
 Pop_size = 80
@@ -265,24 +268,37 @@ def printVector():
     print("\n-----------------------------------------------------------\n")
 
 if __name__ == "__main__":
+    main_time = time.time()
     try:
         os.remove("rules.txt")
     except OSError:
         pass
-    main_time = time.time()
     
-    
+    df_pos = pd.read_csv("positive.csv")
+    df_neg = pd.read_csv("negative.csv")
+    col = df_pos.columns.tolist()
+
+    atrbs = col[:len(col) - 1]
+    target = col[-1]
+
+    df_pos, df_pos_testing, y_train, y_test = train_test_split(df_pos[atrbs], df_pos[target], test_size=0.3, random_state=42)
+    df_neg, df_neg_testing, y_train, y_test = train_test_split(df_neg[atrbs], df_neg[target], test_size=0.3, random_state=42)
+
     run = 0
     classes = [0,1]
+    acc_pos = 0
+    acc_neg = 0
     for cat in classes:
+        rule_set = []
         initilize_params(cat)
         df = pd.DataFrame()
+        df_testing = pd.DataFrame()
         if(cat == 0):
             df = df_neg
         else:
             df = df_pos
         print(f"\nMining for Classs : {cat}\n\n")
-        while df[df["Outcome"] == cat].shape[0] > threshold:
+        while df.shape[0] > threshold:
             start_time = time.time()
             initialize(cat)
             GlobalLearning(cat)
@@ -314,13 +330,24 @@ if __name__ == "__main__":
             # printVector()
             # print(GlobalLeaderPosition[:24],end="\n\n")
             # print(f"\nData set size : {df.shape[0]}\n")
+            rule_set.append(GlobalLeaderPosition)
+
             score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-            print(f"Hits scored : {score}")
+            # print(f"Hits scored : {score}")
             # print("\n---------------------------------\n")
             # print("Execution time : ",end=" ")
             # print(" %s seconds " % (time.time() - start_time))
             # print("\n---------------------------------\n")
+        
+        if cat == 0:
+            acc_pos = accuracy(rule_set,df_pos_testing)
+        else:
+            acc_neg = accuracy(rule_set,df_neg_testing)
+
+    print("\n\nEnd of Mining task\n\n")
     
-    print("\n\nEnd of Mining task")
+    print(f"Accuracy for class<0> : {acc_neg}")
+    print(f"Accuracy for class<1> : {acc_pos}\n\n")
+    
     print("Total execution time : ",end = " ")
     print(" %s seconds " % (time.time() - main_time),end = "\n\n")

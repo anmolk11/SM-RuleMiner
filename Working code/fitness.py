@@ -4,11 +4,6 @@ import math
 
 cutoff = 0.5
 
-df_pos = pd.read_csv("positive.csv")
-df_neg = pd.read_csv("negative.csv")
-
-col = df_pos.columns.tolist()
-
 def makeMonkey(args):
     monkey = {}
     
@@ -20,18 +15,11 @@ def makeMonkey(args):
     
     return monkey
 
-def fitness(spiderMonkey,sign):
+def fitness(spiderMonkey,sign,df):
     spiderMonkey = makeMonkey(spiderMonkey)
     
     T,F = 0,0
-    
-    df = pd.DataFrame()
-
-    if sign == 0:
-        df = df_neg
-    else:
-        df = df_pos
-
+    col = df.columns.tolist()
     for ind,row in df.iterrows():
         rule_satisfied = True
         for k,v in spiderMonkey.items():
@@ -52,9 +40,9 @@ def fitness(spiderMonkey,sign):
 
 w1,w2,w3,w4,w5 = 0.5,0.5,0.5,0.2,0.3
 
-def G_measure_ave(args):
-    Tp,Fp = fitness(args,0)
-    Tn,Fn = fitness(args,1)
+def G_measure_ave(args,df_pos,df_neg):
+    Tp,Fp = fitness(args,0,df_neg)
+    Tn,Fn = fitness(args,1,df_pos)
     
     recall = Tp/(Tp + Fn) if Tp > 0 else 0
     precision = Tp/(Tp + Fp) if Tp > 0 else 0
@@ -80,21 +68,21 @@ def Comprehensibility(args):
     
     return (num_attr - 1)/8     
     
-# def fun(args,sign = 0):
-#     atr = 0
-#     for i in range(0,24):
-#         if i % 3 == 0:
-#             if args[i] >= cutoff:
-#                 atr += 1 
+def fun(args,sign,df_pos,df_neg):
+    atr = 0
+    for i in range(0,24):
+        if i % 3 == 0:
+            if args[i] >= cutoff:
+                atr += 1 
 
-#     if(atr == 0):
-#         return 0.0
+    if(atr == 0):
+        return 0.0
 
-#     fit_score = w3 * G_measure_ave(args) + w4 * MIR() - w5 * Comprehensibility(args)
+    fit_score = w3 * G_measure_ave(args,df_pos,df_neg) + w4 * MIR() - w5 * Comprehensibility(args)
 
-#     # print(fit_score)
+    # print(fit_score)
 
-#     return -1 * fit_score
+    return -1 * fit_score
 
 
 # def fun(spiderMonkey,sign = 0):
@@ -119,25 +107,25 @@ def Comprehensibility(args):
 
 #     return -1 * hits
 
-def fun(spiderMonkey,sign = 0):
-    hits = 0
-    df = pd.DataFrame()
-    if sign == 0:
-        df = df_neg
-    else:
-        df = df_pos
+# def fun(spiderMonkey,sign = 0):
+#     hits = 0
+#     df = pd.DataFrame()
+#     if sign == 0:
+#         df = df_neg
+#     else:
+#         df = df_pos
         
-    spiderMonkey = makeMonkey(spiderMonkey)
-    for ind,row in df.iterrows():
-        rule_satisfied = True
-        inside = False
-        for k,v in spiderMonkey.items():
-            if v[0] >= cutoff:
-                inside = True
-                if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
-                    rule_satisfied = False
-                    break
-        if inside and rule_satisfied:
-            hits += 1
+#     spiderMonkey = makeMonkey(spiderMonkey)
+#     for ind,row in df.iterrows():
+#         rule_satisfied = True
+#         inside = False
+#         for k,v in spiderMonkey.items():
+#             if v[0] >= cutoff:
+#                 inside = True
+#                 if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
+#                     rule_satisfied = False
+#                     break
+#         if inside and rule_satisfied:
+#             hits += 1
 
-        return -1 * hits
+#         return -1 * hits
