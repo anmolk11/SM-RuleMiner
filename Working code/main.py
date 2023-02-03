@@ -83,7 +83,7 @@ def CalculateFitness(fun):
 
     return result
 
-def create_group():
+def create_group(sign):
     g = 0
     global lo,hi,gpoint,group
     while lo < Pop_size:
@@ -98,7 +98,7 @@ def create_group():
         lo = hi + 1
     group = g
 
-def GlobalLearning():
+def GlobalLearning(sign):
     global GlobalMin,GlobalLimitCount
     G_trial = GlobalMin
     for i in range(Pop_size):
@@ -112,7 +112,7 @@ def GlobalLearning():
         GlobalLimitCount = 0
 
 
-def LocalLearning():
+def LocalLearning(sign):
     OldMin = np.zeros(Pop_size//2)
     for k in range(group):
         OldMin[k] = LocalMin[k]
@@ -130,7 +130,7 @@ def LocalLearning():
         else:
             LocalLimitCount[k] = 0
 
-def initialize():
+def initialize(sign):
     global GlobalMin
     global GlobalLeaderPosition
     global GlobalLimitCount
@@ -138,7 +138,7 @@ def initialize():
         for j in range(D):
             Population[i][j] = random.uniform(0, 1) * (ub[j] - lb[j]) + lb[j]
             new_position[j] = Population[i][j]
-        fun_val[i] = fun(new_position)
+        fun_val[i] = fun(new_position,sign)
         fitness[i] = CalculateFitness(fun_val[i])
 
     GlobalMin = fun_val[0]
@@ -150,7 +150,7 @@ def initialize():
         LocalLimitCount[k] = 0
         LocalLeaderPosition[k] = Population[int(gpoint[k][0])]
 
-def LocalLeaderPhase(k):
+def LocalLeaderPhase(k,sign):
     global lo,hi,cr
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
@@ -169,7 +169,7 @@ def LocalLeaderPhase(k):
             if new_position[j] > ub[j]:
                 new_position[j] = ub[j]
 
-        ObjValSol = fun(new_position)
+        ObjValSol = fun(new_position,sign)
         FitnessSol = CalculateFitness(ObjValSol)
         if FitnessSol > fitness[i]:
             for j in range(D):
@@ -178,7 +178,7 @@ def LocalLeaderPhase(k):
             fitness[i] = FitnessSol
     
 
-def GlobalLeaderPhase(k):
+def GlobalLeaderPhase(k,sign):
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
     i = lo
@@ -199,7 +199,7 @@ def GlobalLeaderPhase(k):
                 new_position[param2change] = lb[param2change]
             if new_position[param2change] > ub[param2change]:
                 new_position[param2change] = ub[param2change]
-            ObjValSol = fun(new_position)
+            ObjValSol = fun(new_position,sign)
             FitnessSol = CalculateFitness(ObjValSol)
             if FitnessSol > fitness[i]:
                 for j in range(D):
@@ -210,7 +210,7 @@ def GlobalLeaderPhase(k):
         if i == hi:
             i = lo
 
-def CalculateProbabilities():
+def CalculateProbabilities(sign):
     maxfit = fitness[0]
     for i in range(1,Pop_size):
         if fitness[i] > maxfit:
@@ -220,7 +220,7 @@ def CalculateProbabilities():
         prob[i] = 0.9 * (fitness[i] / maxfit) + 0.1
 
 
-def LocalLeaderDecision():
+def LocalLeaderDecision(sign):
     for k in range(group):
         if LocalLimitCount[k] > LocalLimit:
             for i in range(gpoint[k][0], gpoint[k][1]+1):
@@ -234,13 +234,13 @@ def LocalLeaderDecision():
                     if Population[i][j] > ub[j]:
                         Population[i][j] = ub[j]
 
-                fun_val[i] = fun(Population[i])
+                fun_val[i] = fun(Population[i],sign)
                 fitness[i] = CalculateFitness(fun_val[i])
 
             LocalLimitCount[k] = 0
 
 
-def GlobalLeaderDecision():
+def GlobalLeaderDecision(sign):
     global GlobalLimitCount
     if GlobalLimitCount > GlobalLimit:
         GlobalLimitCount = 0
@@ -281,29 +281,29 @@ if __name__ == "__main__":
             df = df_neg
         else:
             df = df_pos
-        print(f"Mining for Classs : {cat}\n\n")
+        print(f"\nMining for Classs : {cat}\n\n")
         while df[df["Outcome"] == cat].shape[0] > threshold:
             start_time = time.time()
-            initialize()
-            GlobalLearning()
-            LocalLearning()
+            initialize(cat)
+            GlobalLearning(cat)
+            LocalLearning(cat)
             fevel = 0
             part = 1
-            create_group()
+            create_group(cat)
 
             for iter in range(Max_iterations):
                 for k in range(group):
-                    LocalLeaderPhase(k)
+                    LocalLeaderPhase(k,cat)
 
-                CalculateProbabilities()
+                CalculateProbabilities(cat)
 
                 for k in range(group):
-                    GlobalLeaderPhase(k)
+                    GlobalLeaderPhase(k,cat)
                 
-                GlobalLearning()
-                LocalLearning()
-                LocalLeaderDecision()
-                GlobalLeaderDecision()
+                GlobalLearning(cat)
+                LocalLearning(cat)
+                LocalLeaderDecision(cat)
+                GlobalLeaderDecision(cat)
 
                 if abs(GlobalMin - obj_val) <= acc_err:
                     break
@@ -313,7 +313,7 @@ if __name__ == "__main__":
             
             # printVector()
             # print(GlobalLeaderPosition[:24],end="\n\n")
-            print(f"\nData set size : {df.shape[0]}\n")
+            # print(f"\nData set size : {df.shape[0]}\n")
             score = delRows(GlobalLeaderPosition,cat,displayRules = False)
             print(f"Hits scored : {score}")
             # print("\n---------------------------------\n")
