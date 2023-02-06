@@ -4,5 +4,9 @@ Need to work on genrating rules from both classes.
 --------------------- Done ---------------------------------
 
 Need to split data for testing and training
+
+--------------------- Done ---------------------------------
+
+
 Apply 10-fold cross validation
 Get an union or intersection of all the rules genrated.
