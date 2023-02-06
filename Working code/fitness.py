@@ -77,21 +77,21 @@ def Comprehensibility(args):
     
     return (num_attr - 1)/8     
     
-def fun(args,sign):
-    atr = 0
-    for i in range(0,24):
-        if i % 3 == 0:
-            if args[i] >= cutoff:
-                atr += 1 
+# def fun(args,sign):
+#     atr = 0
+#     for i in range(0,24):
+#         if i % 3 == 0:
+#             if args[i] >= cutoff:
+#                 atr += 1 
 
-    if(atr == 0):
-        return 0.0
+#     if(atr == 0):
+#         return 0.0
 
-    fit_score = w3 * G_measure_ave(args) + w4 * MIR() - w5 * Comprehensibility(args)
+#     fit_score = w3 * G_measure_ave(args) + w4 * MIR() - w5 * Comprehensibility(args)
 
-    # print(fit_score)
+#     # print(fit_score)
 
-    return -1 * fit_score
+#     return -1 * fit_score
 
 
 # def fun(spiderMonkey,sign = 0):
@@ -116,25 +116,25 @@ def fun(args,sign):
 
 #     return -1 * hits
 
-# def fun(spiderMonkey,sign = 0):
-#     hits = 0
-#     df = pd.DataFrame()
-#     if sign == 0:
-#         df = df_neg_train
-#     else:
-#         df = df_pos_train
+def fun(spiderMonkey,sign = 0):
+    hits = 0
+    df = pd.DataFrame()
+    if sign == 0:
+        df = df_neg_train
+    else:
+        df = df_pos_train
         
-#     spiderMonkey = makeMonkey(spiderMonkey)
-#     for ind,row in df.iterrows():
-#         rule_satisfied = True
-#         inside = False
-#         for k,v in spiderMonkey.items():
-#             if v[0] >= cutoff:
-#                 inside = True
-#                 if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
-#                     rule_satisfied = False
-#                     break
-#         if inside and rule_satisfied:
-#             hits += 1
+    spiderMonkey = makeMonkey(spiderMonkey)
+    for ind,row in df.iterrows():
+        rule_satisfied = True
+        inside = False
+        for k,v in spiderMonkey.items():
+            if v[0] >= cutoff:
+                inside = True
+                if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
+                    rule_satisfied = False
+                    break
+        if inside and rule_satisfied:
+            hits += 1
 
-#         return -1 * hits
+        return -1 * hits

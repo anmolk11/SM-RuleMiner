@@ -6,6 +6,7 @@ import os
 from fitness import fun
 from read_rule import *
 from data import *
+from test import accuracy
 
 threshold = 30
 Pop_size = 80
@@ -276,6 +277,8 @@ if __name__ == "__main__":
     
     run = 0
     classes = [0,1]
+    rule_set_pos = []
+    rule_set_neg = []
     for cat in classes:
         initilize_params(cat)
         df = pd.DataFrame()
@@ -283,8 +286,8 @@ if __name__ == "__main__":
             df = df_neg_train
         else:
             df = df_pos_train
-        print(f"\nMining for Classs : {cat}\n\n")
-        while df[df["Outcome"] == cat].shape[0] > threshold:
+        # print(f"\nMining for Classs : {cat}\n\n")
+        while df.shape[0] > threshold:
             start_time = time.time()
             initialize(cat)
             GlobalLearning(cat)
@@ -313,16 +316,29 @@ if __name__ == "__main__":
                 cr = cr + 0.4/Max_iterations
                 GlobalMins[run] = GlobalMin
             
+            if cat == 0:
+                rule_set_neg.append(GlobalLeaderPosition[:24])
+            else:
+                rule_set_pos.append(GlobalLeaderPosition[:24])
+
             # printVector()
             # print(GlobalLeaderPosition[:24],end="\n\n")
-            print(f"\nData set size : {df.shape[0]}\n")
+            # print(f"\nData set size : {df.shape[0]}\n")
             score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-            print(f"Hits scored : {score}")
+            # print(f"Hits scored : {score}")
             # print("\n---------------------------------\n")
             # print("Execution time : ",end=" ")
             # print(" %s seconds " % (time.time() - start_time))
             # print("\n---------------------------------\n")
     
-    print("\n\nEnd of Mining task")
+    # print("\n\nEnd of Mining task\n\n")
+
+    acc_pos = accuracy(rule_set_pos,1)
+    acc_neg = accuracy(rule_set_neg,0)
+
+    print(f"\nAccuracy for Positve class rules : {round(acc_pos,2)}%\n\n")
+    print(f"Accuracy for Negative class rules : {round(acc_neg,2)}%")
+
+    print("\n----------------------------------------------------------\n")
     print("Total execution time : ",end = " ")
     print(" %s seconds " % (time.time() - main_time),end = "\n\n")

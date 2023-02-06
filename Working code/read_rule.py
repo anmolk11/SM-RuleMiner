@@ -45,7 +45,7 @@ def delRows(args,sign,displayRules = True):
                 if row[col[k]] < mn or row[col[k]] > mx:
                     rule_satisfied = False
                     break
-        if rule_satisfied and row["Outcome"] == sign:
+        if rule_satisfied:
             score += 1
             drop_ind.append(ind)
 
