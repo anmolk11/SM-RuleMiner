@@ -1,9 +1,11 @@
 import numpy as np
 import random
-from fitness import fun
-from read_rule import *
 import time
 import os
+
+from fitness import fun
+from read_rule import *
+from data import *
 
 threshold = 30
 Pop_size = 80
@@ -278,9 +280,9 @@ if __name__ == "__main__":
         initilize_params(cat)
         df = pd.DataFrame()
         if(cat == 0):
-            df = df_neg
+            df = df_neg_train
         else:
-            df = df_pos
+            df = df_pos_train
         print(f"\nMining for Classs : {cat}\n\n")
         while df[df["Outcome"] == cat].shape[0] > threshold:
             start_time = time.time()
@@ -313,7 +315,7 @@ if __name__ == "__main__":
             
             # printVector()
             # print(GlobalLeaderPosition[:24],end="\n\n")
-            # print(f"\nData set size : {df.shape[0]}\n")
+            print(f"\nData set size : {df.shape[0]}\n")
             score = delRows(GlobalLeaderPosition,cat,displayRules = False)
             print(f"Hits scored : {score}")
             # print("\n---------------------------------\n")

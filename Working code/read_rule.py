@@ -1,14 +1,15 @@
 from fitness import *
 import os
+from data import *
 
 num_rule = 1
 
 def delRows(args,sign,displayRules = True):
     df = pd.DataFrame()
     if sign == 0:
-        df = df_neg
+        df = df_neg_train
     else:
-        df = df_pos
+        df = df_pos_train
 
     global num_rule
     file = open("rules.txt","a")

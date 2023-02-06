@@ -1,18 +1,15 @@
 import pandas as pd
 import numpy as np
 import math
+from data import *
 
 cutoff = 0.5
 
-df_pos = pd.read_csv("positive.csv")
-df_neg = pd.read_csv("negative.csv")
-
-col = df_pos.columns.tolist()
 
 def makeMonkey(args):
     monkey = {}
     
-    i = 1
+    i = 0
     
     for j in range(0,24,3):
         monkey[i] = args[j:j+3]
@@ -28,9 +25,9 @@ def fitness(spiderMonkey,sign):
     df = pd.DataFrame()
 
     if sign == 0:
-        df = df_neg
+        df = df_neg_train
     else:
-        df = df_pos
+        df = df_pos_train
 
     for ind,row in df.iterrows():
         rule_satisfied = True
@@ -53,8 +50,8 @@ def fitness(spiderMonkey,sign):
 w1,w2,w3,w4,w5 = 0.5,0.5,0.5,0.2,0.3
 
 def G_measure_ave(args):
-    Tp,Fp = fitness(args,0)
-    Tn,Fn = fitness(args,1)
+    Tn,Fp = fitness(args,0)
+    Tp,Fn = fitness(args,1)
     
     recall = Tp/(Tp + Fn) if Tp > 0 else 0
     precision = Tp/(Tp + Fp) if Tp > 0 else 0
@@ -80,7 +77,7 @@ def Comprehensibility(args):
     
     return (num_attr - 1)/8     
     
-def fun(args,sign = 0):
+def fun(args,sign):
     atr = 0
     for i in range(0,24):
         if i % 3 == 0:
@@ -123,9 +120,9 @@ def fun(args,sign = 0):
 #     hits = 0
 #     df = pd.DataFrame()
 #     if sign == 0:
-#         df = df_neg
+#         df = df_neg_train
 #     else:
-#         df = df_pos
+#         df = df_pos_train
         
 #     spiderMonkey = makeMonkey(spiderMonkey)
 #     for ind,row in df.iterrows():
