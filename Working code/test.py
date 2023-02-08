@@ -3,6 +3,7 @@ from fitness import *
 import pandas as pd
 
 def score(rule,sign):
+    # print(rule.tolist(),end = "\n--------------\n")
     df = pd.DataFrame()
     rule = makeMonkey(rule) 
     if sign == 0:
@@ -20,7 +21,7 @@ def score(rule,sign):
                     break
         if rule_sat:
             hits += 1
-
+    print(f"Hits : {hits}\n\n")
     return hits/N
 
 def accuracy(rule_set,sign):
