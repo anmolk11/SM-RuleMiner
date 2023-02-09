@@ -267,84 +267,85 @@ def printVector():
             print(GlobalLeaderPosition[i],end="   ")
     print("\n-----------------------------------------------------------\n")
 
+
 if __name__ == "__main__":
-    try:
-        os.remove("rules.txt")
-    except OSError:
-        pass
-    main_time = time.time()
-    
-    
-    run = 0
-    classes = [0,1]
-    rule_set_pos = []
-    rule_set_neg = []
-    for cat in classes:
-        initilize_params(cat)
-        df = pd.DataFrame()
-        if(cat == 0):
-            df = df_neg_train
-        else:
-            df = df_pos_train
-        # print(f"\nMining for Classs : {cat}\n\n")
-        while df.shape[0] > threshold:
-            start_time = time.time()
-            initialize(cat)
-            GlobalLearning(cat)
-            LocalLearning(cat)
-            fevel = 0
-            part = 1
-            create_group(cat)
-
-            for iter in range(Max_iterations):
-                for k in range(group):
-                    LocalLeaderPhase(k,cat)
-
-                CalculateProbabilities(cat)
-
-                for k in range(group):
-                    GlobalLeaderPhase(k,cat)
-                
+        try:
+            os.remove("rules.txt")
+        except OSError:
+            pass
+        main_time = time.time()
+        
+        
+        run = 0
+        classes = [0,1]
+        rule_set_pos = []
+        rule_set_neg = []
+        for cat in classes:
+            initilize_params(cat)
+            df = pd.DataFrame()
+            if(cat == 0):
+                df = df_neg_train
+            else:
+                df = df_pos_train
+            # print(f"\nMining for Classs : {cat}\n\n")
+            while df.shape[0] > threshold:
+                start_time = time.time()
+                initialize(cat)
                 GlobalLearning(cat)
                 LocalLearning(cat)
-                LocalLeaderDecision(cat)
-                GlobalLeaderDecision(cat)
+                fevel = 0
+                part = 1
+                create_group(cat)
 
-                if abs(GlobalMin - obj_val) <= acc_err:
-                    break
+                for iter in range(Max_iterations):
+                    for k in range(group):
+                        LocalLeaderPhase(k,cat)
 
-                cr = cr + 0.4/Max_iterations
-                GlobalMins[run] = GlobalMin
-            
-            if cat == 0:
+                    CalculateProbabilities(cat)
+
+                    for k in range(group):
+                        GlobalLeaderPhase(k,cat)
+                    
+                    GlobalLearning(cat)
+                    LocalLearning(cat)
+                    LocalLeaderDecision(cat)
+                    GlobalLeaderDecision(cat)
+
+                    if abs(GlobalMin - obj_val) <= acc_err:
+                        break
+
+                    cr = cr + 0.4/Max_iterations
+                    GlobalMins[run] = GlobalMin
+                
+                if cat == 0:
+                    # printVector()
+                    rule_set_neg.append(GlobalLeaderPosition[:24].tolist())
+                else:
+                    # printVector()
+                    rule_set_pos.append(GlobalLeaderPosition[:24].tolist())
+
                 # printVector()
-                rule_set_neg.append(GlobalLeaderPosition[:24].tolist())
-            else:
-                # printVector()
-                rule_set_pos.append(GlobalLeaderPosition[:24].tolist())
+                # print(GlobalLeaderPosition[:24],end="\n\n")
+                # print(f"\nData set size : {df.shape[0]}\n")
+                score = delRows(GlobalLeaderPosition,cat,displayRules = False)
+                # print(f"Hits scored : {score}")
+                # print("\n---------------------------------\n")
+                # print("Execution time : ",end=" ")
+                # print(" %s seconds " % (time.time() - start_time))
+                # print("\n---------------------------------\n")
+        
+        # print("\n\nEnd of Mining task\n\n")
 
-            # printVector()
-            # print(GlobalLeaderPosition[:24],end="\n\n")
-            # print(f"\nData set size : {df.shape[0]}\n")
-            score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-            # print(f"Hits scored : {score}")
-            # print("\n---------------------------------\n")
-            # print("Execution time : ",end=" ")
-            # print(" %s seconds " % (time.time() - start_time))
-            # print("\n---------------------------------\n")
+        # print("0\n\n")
+        # print(rule_set_neg)
+        # print("\n\n1\n\n")
+        # print(rule_set_pos)
+        acc_neg = accuracy(rule_set_neg,0)
+        acc_pos = accuracy(rule_set_pos,1)
     
-    # print("\n\nEnd of Mining task\n\n")
+        print(f"\nAccuracy for Positve class rules : {round(acc_pos,2)}%\n\n")
+        print(f"Accuracy for Negative class rules : {round(acc_neg,2)}%")
 
-    # print("0\n\n")
-    # print(rule_set_neg)
-    # print("\n\n1\n\n")
-    # print(rule_set_pos)
-    acc_pos = accuracy(rule_set_pos,1)
-    acc_neg = accuracy(rule_set_neg,0)
-
-    print(f"\nAccuracy for Positve class rules : {round(acc_pos,2)}%\n\n")
-    print(f"Accuracy for Negative class rules : {round(acc_neg,2)}%")
-
-    print("\n----------------------------------------------------------\n")
-    print("Total execution time : ",end = " ")
-    print(" %s seconds " % (time.time() - main_time),end = "\n\n")
+        print("\n----------------------------------------------------------\n")
+        print("Total execution time : ",end = " ")
+        print(" %s seconds " % (time.time() - main_time),end = "\n\n")
