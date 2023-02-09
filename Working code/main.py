@@ -317,9 +317,11 @@ if __name__ == "__main__":
                 GlobalMins[run] = GlobalMin
             
             if cat == 0:
-                rule_set_neg.append(GlobalLeaderPosition[:24])
+                # printVector()
+                rule_set_neg.append(GlobalLeaderPosition[:24].tolist())
             else:
-                rule_set_pos.append(GlobalLeaderPosition[:24])
+                # printVector()
+                rule_set_pos.append(GlobalLeaderPosition[:24].tolist())
 
             # printVector()
             # print(GlobalLeaderPosition[:24],end="\n\n")
@@ -333,6 +335,10 @@ if __name__ == "__main__":
     
     # print("\n\nEnd of Mining task\n\n")
 
+    # print("0\n\n")
+    # print(rule_set_neg)
+    # print("\n\n1\n\n")
+    # print(rule_set_pos)
     acc_pos = accuracy(rule_set_pos,1)
     acc_neg = accuracy(rule_set_neg,0)
 

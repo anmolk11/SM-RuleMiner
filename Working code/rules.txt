@@ -1,25 +1,30 @@
 Rule num : 1
 Class : 0
-41.70021984659804 <= Glucose <= 134.46721034964835 
-Hits scored : 287
+6.918132634152748 <= Glucose <= 136.73639928396355 
+Hits scored : 292
 
 --------------
 Rule num : 2
 Class : 0
-125.38570327268066 <= Glucose <= 158.6590648526413 
-51.274922208751725 <= BloodPressure <= 122.0 
-Hits scored : 47
+61.84325829654102 <= Age <= 70.45191551939702 
+Hits scored : 6
 
 --------------
 Rule num : 3
-Class : 1
-65.28475506686299 <= Glucose <= 160.44988386611678 
-Hits scored : 128
+Class : 0
+127.01834458999184 <= Glucose <= 160.39164521910283 
+Hits scored : 39
 
 --------------
 Rule num : 4
 Class : 1
-34.52760179102427 <= Glucose <= 199.0 
-Hits scored : 58
+99.92678986924524 <= Glucose <= 171.4887976137838 
+Hits scored : 133
+
+--------------
+Rule num : 5
+Class : 1
+43.45894504457972 <= Glucose <= 191.9900258166264 
+Hits scored : 46
 
 --------------

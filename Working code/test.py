@@ -2,8 +2,17 @@ from data import *
 from fitness import *
 import pandas as pd
 
+def printVector(GlobalLeaderPosition):
+    print("\n-----------------------------------------------------------\n")
+    for i in range(0,24):
+        if(i % 3 == 2):
+            print(GlobalLeaderPosition[i])
+        else:
+            print(GlobalLeaderPosition[i],end="   ")
+    print("\n-----------------------------------------------------------\n")
+
 def score(rule,sign):
-    # print(rule.tolist(),end = "\n--------------\n")
+    printVector(rule)
     df = pd.DataFrame()
     rule = makeMonkey(rule) 
     if sign == 0:
@@ -21,7 +30,7 @@ def score(rule,sign):
                     break
         if rule_sat:
             hits += 1
-    print(f"Hits : {hits}\n\n")
+    # print(f"Hits : {hits}\n\n")
     return hits/N
 
 def accuracy(rule_set,sign):
