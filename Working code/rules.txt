@@ -1,32 +1,50 @@
 Rule num : 1
 Class : 0
-0.0 <= Glucose <= 130.04155100622935 
-Hits scored : 283
+30.728474763897538 <= Glucose <= 123.95304320104054 
+Hits scored : 251
 
 --------------
 Rule num : 2
 Class : 0
-133.9005199147604 <= Glucose <= 147.79991414239026 
-28.33804008085223 <= BloodPressure <= 106.29758497456183 
-Hits scored : 33
+24.340789185922105 <= BMI <= 27.34770006376415 
+Hits scored : 17
 
 --------------
 Rule num : 3
 Class : 0
-27.739622937814623 <= SkinThickness <= 36.28176511105577 
-Hits scored : 8
+59.66446416454848 <= Glucose <= 173.79490208231502 
+74.04297480635444 <= BloodPressure <= 85.05416375551549 
+Hits scored : 29
 
 --------------
 Rule num : 4
-Class : 1
-16.161958777573865 <= SkinThickness <= 75.8856116212965 
-Hits scored : 123
+Class : 0
+37.91821615976058 <= SkinThickness <= 54.29072759483444 
+Hits scored : 7
 
 --------------
 Rule num : 5
+Class : 0
+46.97582887829603 <= Age <= 71.30201221991909 
+Hits scored : 8
+
+--------------
+Rule num : 6
+Class : 0
+119.22837198081204 <= Glucose <= 140.0706246944217 
+40.052429404579534 <= BloodPressure <= 116.92709987124782 
+Hits scored : 20
+
+--------------
+Rule num : 7
 Class : 1
-40.32062314224318 <= Glucose <= 147.37240545794833 
-46.57752666220533 <= BloodPressure <= 96.42810087053924 
-Hits scored : 35
+29.872519403891623 <= Age <= 77.20656136114586 
+Hits scored : 134
+
+--------------
+Rule num : 8
+Class : 1
+32.68864545333993 <= SkinThickness <= 81.57235885113005 
+Hits scored : 25
 
 --------------
