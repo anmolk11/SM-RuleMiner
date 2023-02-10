@@ -20,7 +20,7 @@ To run this project run
 
 ```bash
   git clone https://github.com/anmolk11/SM-RuleMiner.git 
-  cd SM-RuleMiner
+  cd SM-RuleMiner/Working_code
   python main.py
 ```
 
