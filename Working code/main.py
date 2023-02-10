@@ -2,6 +2,8 @@ import numpy as np
 import random
 import time
 import os
+import openpyxl
+import datetime
 
 from fitness import fun
 from read_rule import *
@@ -267,6 +269,14 @@ def printVector():
             print(GlobalLeaderPosition[i],end="   ")
     print("\n-----------------------------------------------------------\n")
 
+def writeLog(p_ave,p_best,n_ave,n_best):
+    workbook = openpyxl.load_workbook("log.xlsx")
+    sheet = workbook.active
+    now = datetime.datetime.now()
+    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
+    workbook.save("log.xlsx")
+
 
 if __name__ == "__main__":
         try:
@@ -274,8 +284,6 @@ if __name__ == "__main__":
         except OSError:
             pass
         main_time = time.time()
-        
-        
         run = 0
         classes = [0,1]
         rule_set_pos = []
@@ -287,7 +295,6 @@ if __name__ == "__main__":
                 df = df_neg_train
             else:
                 df = df_pos_train
-            # print(f"\nMining for Classs : {cat}\n\n")
             while df.shape[0] > threshold:
                 start_time = time.time()
                 initialize(cat)
@@ -318,33 +325,21 @@ if __name__ == "__main__":
                     GlobalMins[run] = GlobalMin
                 
                 if cat == 0:
-                    # printVector()
                     rule_set_neg.append(GlobalLeaderPosition[:24].tolist())
                 else:
-                    # printVector()
                     rule_set_pos.append(GlobalLeaderPosition[:24].tolist())
 
-                # printVector()
-                # print(GlobalLeaderPosition[:24],end="\n\n")
-                # print(f"\nData set size : {df.shape[0]}\n")
                 score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-                # print(f"Hits scored : {score}")
-                # print("\n---------------------------------\n")
-                # print("Execution time : ",end=" ")
-                # print(" %s seconds " % (time.time() - start_time))
-                # print("\n---------------------------------\n")
-        
-        # print("\n\nEnd of Mining task\n\n")
+                
+        acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
+        acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
 
-        # print("0\n\n")
-        # print(rule_set_neg)
-        # print("\n\n1\n\n")
-        # print(rule_set_pos)
-        acc_neg = accuracy(rule_set_neg,0)
-        acc_pos = accuracy(rule_set_pos,1)
-    
-        print(f"\nAccuracy for Positve class rules : {round(acc_pos,2)}%\n\n")
-        print(f"Accuracy for Negative class rules : {round(acc_neg,2)}%")
+        writeLog(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best)
+        
+        print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
+        print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
+        print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
+        print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
 
         print("\n----------------------------------------------------------\n")
         print("Total execution time : ",end = " ")
