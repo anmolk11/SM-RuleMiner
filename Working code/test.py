@@ -15,7 +15,11 @@ def score(rule,sign):
     # printVector(rule)
     df = pd.DataFrame()
     rule = makeMonkey(rule) 
-    print(rule)
+    
+    # for k,v in rule.items():
+    #     print(f"{col[k]} : {v}\n")
+    # print("\n----\n")
+
     if sign == 0:
         df = df_neg_test
     else:
@@ -26,12 +30,14 @@ def score(rule,sign):
         rule_sat = True
         for k,v in rule.items():
             if v[0] >= cutoff:
-                if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
+                mn = min(v[1],v[2])
+                mx = max(v[1],v[2])
+                if (row[col[k]] < mn) or (row[col[k]] > mx):
                     rule_sat = False
                     break
         if rule_sat:
             hits += 1
-    print(f"{sign} Hits : {hits}\n\n")
+    # print(f"{sign} Hits : {hits}\n\n")
     return hits/N
 
 def accuracy(rule_set,sign):

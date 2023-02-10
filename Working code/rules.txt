@@ -1,37 +1,32 @@
 Rule num : 1
 Class : 0
-14.849689665388219 <= Glucose <= 124.1067080823421 
-Hits scored : 257
+0.0 <= Glucose <= 130.04155100622935 
+Hits scored : 283
 
 --------------
 Rule num : 2
 Class : 0
-0.22646985222446758 <= DiabetesPedigreeFunction <= 0.3883330549733965 
-Hits scored : 29
+133.9005199147604 <= Glucose <= 147.79991414239026 
+28.33804008085223 <= BloodPressure <= 106.29758497456183 
+Hits scored : 33
 
 --------------
 Rule num : 3
 Class : 0
-83.90117763052456 <= BloodPressure <= 108.18736759264151 
-Hits scored : 13
+27.739622937814623 <= SkinThickness <= 36.28176511105577 
+Hits scored : 8
 
 --------------
 Rule num : 4
-Class : 0
-0.47593746685698374 <= DiabetesPedigreeFunction <= 0.714722566030793 
-Hits scored : 16
+Class : 1
+16.161958777573865 <= SkinThickness <= 75.8856116212965 
+Hits scored : 123
 
 --------------
 Rule num : 5
-Class : 0
-127.61534563484328 <= Glucose <= 155.88164204691932 
-6.40358568937157 <= BMI <= 40.95927816133826 
-Hits scored : 21
-
---------------
-Rule num : 6
 Class : 1
-0.0 <= Insulin <= 706.1817040678533 
-Hits scored : 187
+40.32062314224318 <= Glucose <= 147.37240545794833 
+46.57752666220533 <= BloodPressure <= 96.42810087053924 
+Hits scored : 35
 
 --------------
