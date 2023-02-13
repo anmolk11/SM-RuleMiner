@@ -277,6 +277,14 @@ def writeLog(p_ave,p_best,n_ave,n_best):
     sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
     workbook.save("log.xlsx")
 
+def logRules():
+    with open("rules.txt", "r") as f1, open("rules_log.txt", "a") as f2:
+        contents = f1.read()
+        now = datetime.datetime.now()
+        current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+        f2.write(current_date_time)
+        f2.write("\n-----------------------------------------\n")
+        f2.write(contents)
 
 if __name__ == "__main__":
         try:
@@ -335,6 +343,7 @@ if __name__ == "__main__":
         acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
 
         writeLog(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best)
+        logRules()
         
         print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
         print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
