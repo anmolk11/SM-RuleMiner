@@ -388,3 +388,23 @@ Class : 1
 Hits scored : 38
 
 --------------
+2023-02-13 19:36:15
+-----------------------------------------
+Rule num : 1
+Class : 0
+0.0 <= Pregnancies <= 4.09882047158208 
+Hits scored : 254
+
+--------------
+Rule num : 2
+Class : 0
+4.54507780398294 <= Pregnancies <= 10.01812216472704 
+Hits scored : 89
+
+--------------
+Rule num : 3
+Class : 1
+0.21766393629685962 <= DiabetesPedigreeFunction <= 2.42 
+Hits scored : 162
+
+--------------
