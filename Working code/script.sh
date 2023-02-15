@@ -1,4 +1,4 @@
-for i in {1..10}; do
+for i in {1..5}; do
 	python main.py
 done
 git add log.xlsx
