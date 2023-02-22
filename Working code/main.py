@@ -270,21 +270,34 @@ def printVector():
     print("\n-----------------------------------------------------------\n")
 
 def writeLog(p_ave,p_best,n_ave,n_best):
-    workbook = openpyxl.load_workbook("log.xlsx")
+    workbook = openpyxl.load_workbook("log_testing.xlsx")
     sheet = workbook.active
     now = datetime.datetime.now()
     current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
     sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
-    workbook.save("log.xlsx")
+    workbook.save("log_testing.xlsx")
 
-def logRules():
-    with open("rules.txt", "r") as f1, open("rules_log.txt", "a") as f2:
-        contents = f1.read()
-        now = datetime.datetime.now()
-        current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-        f2.write(current_date_time)
-        f2.write("\n-----------------------------------------\n")
-        f2.write(contents)
+def logRules(attr,sign,hit_ratio):
+    workbook = openpyxl.load_workbook("log_rules.xlsx")
+    sheet = workbook.active
+    now = datetime.datetime.now()
+    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
+    
+    for i in range(len(attr)):
+        if i % 3 == 0:
+            if attr[i] >= cutoff:
+                attr[i] = 1
+            else:
+                attr[i] = 0
+    for i in range(1,len(attr),3):
+        mx = max(attr[i],attr[i + 1])
+        mn = min(attr[i],attr[i + 1])
+        attr[i] = mn
+        attr[i + 1] = mx
+        
+    sheet.append([current_date_time] + attr + [sign,hit_ratio])
+    workbook.save("log_rules.xlsx")
+    
 
 if __name__ == "__main__":
         try:
@@ -333,17 +346,18 @@ if __name__ == "__main__":
                     GlobalMins[run] = GlobalMin
                 
                 if cat == 0:
-                    rule_set_neg.append(GlobalLeaderPosition[:24].tolist())
+                    rule_set_neg.append(GlobalLeaderPosition[:D].tolist())
                 else:
-                    rule_set_pos.append(GlobalLeaderPosition[:24].tolist())
+                    rule_set_pos.append(GlobalLeaderPosition[:D].tolist())
 
+                size = df.shape[0]
                 score = delRows(GlobalLeaderPosition,cat,displayRules = False)
+                logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size)
                 
         acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
         acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
 
         writeLog(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best)
-        logRules()
         
         print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
         print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
