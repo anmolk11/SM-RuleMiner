@@ -1,6 +1,18 @@
 from data import *
-from fitness import *
 import pandas as pd
+
+cutoff = 0.5
+
+def makeMonkey(args):
+    monkey = {}
+    
+    i = 0
+    
+    for j in range(0,24,3):
+        monkey[i] = args[j:j+3]
+        i += 1
+    
+    return monkey
 
 def score(rule,sign):
     df = pd.DataFrame()
