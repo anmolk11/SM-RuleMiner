@@ -2,14 +2,15 @@ import numpy as np
 import random
 import time
 import os
-import openpyxl
-import datetime
 
-from Fitness.orginal_fitness import fun
+
+from Fitness.fitness_1 import fun
 
 from read_rule import *
 from data import *
 from test import accuracy
+from log import *
+
 
 threshold = 30
 Pop_size = 80
@@ -270,42 +271,10 @@ def printVector():
             print(GlobalLeaderPosition[i],end="   ")
     print("\n-----------------------------------------------------------\n")
 
-def logTesting(p_ave,p_best,n_ave,n_best,file_name):
-    file_name = "Logs/" + file_name + ".xlsx"
-    workbook = openpyxl.load_workbook(file_name)
-    sheet = workbook.active
-    now = datetime.datetime.now()
-    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
-    workbook.save(file_name)
-
-def logRules(attr,sign,hit_ratio,file_name):
-    file_name = "Logs/" + file_name + ".xlsx"
-    workbook = openpyxl.load_workbook(file_name)
-    sheet = workbook.active
-    now = datetime.datetime.now()
-    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    
-    for i in range(len(attr)):
-        if i % 3 == 0:
-            if attr[i] >= cutoff:
-                attr[i] = 1
-            else:
-                attr[i] = 0
-    for i in range(1,len(attr),3):
-        mx = max(attr[i],attr[i + 1])
-        mn = min(attr[i],attr[i + 1])
-        attr[i] = mn
-        attr[i + 1] = mx
-        
-    sheet.append([current_date_time] + attr + [sign,hit_ratio])
-    workbook.save(file_name)
-    
-
 if __name__ == "__main__":
         fitness_function = fun
-        rule_log = "orignal_fitness_rule_log"
-        test_log = "orignal_fitness_test_log"
+        rule_log = "fitness1_rule_log"
+        test_log = "fitness1_test_log"
         try:
             os.remove("Logs/rules.txt")
         except OSError:
