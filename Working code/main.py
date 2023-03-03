@@ -2,6 +2,7 @@ import numpy as np
 import random
 import time
 import os
+from tqdm import tqdm
 
 
 from Fitness.fitness_1 import fun
@@ -285,7 +286,8 @@ if __name__ == "__main__":
         classes = [0,1]
         rule_set_pos = []
         rule_set_neg = []
-        for cat in classes:
+        for i in tqdm(range(len(classes)),desc="Class",colour="red"):
+            cat = classes[i]
             initilize_params(cat)
             df = pd.DataFrame()
             if(cat == 0):
@@ -301,13 +303,13 @@ if __name__ == "__main__":
                 part = 1
                 create_group(cat)
 
-                for iter in range(Max_iterations):
-                    for k in range(group):
+                for iter in tqdm(range(Max_iterations),desc="LocalLeaderPhase",colour="blue"):
+                    for k in tqdm(range(group),desc="LocalLeaderPhase",colour="cyan"):
                         LocalLeaderPhase(k,cat,fitness_function)
 
                     CalculateProbabilities(cat)
 
-                    for k in range(group):
+                    for k in tqdm(range(group),desc="GlobalLeaderPhase",colour="green"):
                         GlobalLeaderPhase(k,cat,fitness_function)
                     
                     GlobalLearning(cat)
