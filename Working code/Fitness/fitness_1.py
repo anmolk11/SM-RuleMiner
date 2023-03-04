@@ -75,9 +75,31 @@ def G_measure_ave(args,sign):
         
     return w1 * G_measure_pos + w2 * G_measure_neg
     
+# Mean Interval Range    
+def MIR(args):
+    attMax = [13, 197, 122, 60, 744, 57.3, 2.329, 72]
     
-def MIR():
-    return 1
+    attMin = [0,    0,   0,   0,  0,  0.0,   0.078, 21]
+
+    mir = 0
+    
+    colInd = 0
+    
+    D = 0
+
+    for i in range(0,len(args),3):
+        if args[i] >= cutoff:
+            D += 1
+            ubi = max(args[i + 1],args[i + 2])
+            lbi = min(args[i + 1],args[i + 2])
+            attr_max = attMax[colInd]
+            attr_min = attMin[colInd]
+            mir += (ubi - lbi)/(attr_max - attr_min)
+        colInd += 1
+
+    if D == 0:
+        return 0
+    return mir/D
     
 def Comprehensibility(args):
     num_attr = 0
@@ -97,6 +119,6 @@ def fun(args,sign):
     if(atr == 0):
         return 0.0
 
-    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR() - w5 * Comprehensibility(args)
+    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR(args) - w5 * Comprehensibility(args)
 
     return -1 * fit_score
