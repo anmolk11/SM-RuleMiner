@@ -1,13 +1,25 @@
 Rule num : 1
 Class : 0
-0.0 <= Pregnancies <= 17.0 
-11.20444273638034 <= Glucose <= 166.65226433726275 
-Hits scored : 339
+10.356825634882124 <= SkinThickness <= 99.0 
+Hits scored : 244
 
 --------------
 Rule num : 2
+Class : 0
+39.97077677412838 <= Glucose <= 163.09845318032262 
+Hits scored : 102
+
+--------------
+Rule num : 3
 Class : 1
-4.927854658036793 <= Glucose <= 188.61844259917652 
-Hits scored : 176
+5.379779443091323 <= SkinThickness <= 96.76776143654244 
+Hits scored : 128
+
+--------------
+Rule num : 4
+Class : 1
+91.00798463628851 <= Glucose <= 183.12156094150504 
+21.24933120343521 <= Age <= 81.0 
+Hits scored : 55
 
 --------------
