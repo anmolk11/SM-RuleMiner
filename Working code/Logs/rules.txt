@@ -1,32 +1,13 @@
 Rule num : 1
 Class : 0
-0.0 <= Glucose <= 128.09017732326623 
-Hits scored : 274
+0.0 <= Pregnancies <= 17.0 
+11.20444273638034 <= Glucose <= 166.65226433726275 
+Hits scored : 339
 
 --------------
 Rule num : 2
-Class : 0
-0.0 <= Pregnancies <= 5.023023109270172 
-0.0 <= BMI <= 32.34149081384187 
-Hits scored : 36
-
---------------
-Rule num : 3
-Class : 0
-233.2370344360708 <= Insulin <= 565.5248897573188 
-Hits scored : 9
-
---------------
-Rule num : 4
-Class : 0
-0.48374446087234557 <= Pregnancies <= 15.363698293982592 
-59.47638445222011 <= Age <= 72.88559551255265 
-Hits scored : 4
-
---------------
-Rule num : 5
 Class : 1
-0.5933481301110874 <= Pregnancies <= 14.227449798117318 
-Hits scored : 161
+4.927854658036793 <= Glucose <= 188.61844259917652 
+Hits scored : 176
 
 --------------
