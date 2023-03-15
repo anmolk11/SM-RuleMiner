@@ -274,6 +274,7 @@ def printVector():
             print(GlobalLeaderPosition[i],end="   ")
     print("\n-----------------------------------------------------------\n")
 
+
 if __name__ == "__main__":
         fitness_function = fun
         rule_log = "orginal_fitness_rule_log"
@@ -289,7 +290,6 @@ if __name__ == "__main__":
         main_time = time.time()
         run = 0
         classes = [0,1]
-        # classes = [0]
         rule_set_pos = []
         rule_set_neg = []
         for i in tqdm(range(len(classes)),desc="Class",colour="red"):
