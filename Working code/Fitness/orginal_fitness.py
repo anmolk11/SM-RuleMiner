@@ -114,6 +114,7 @@ def fun(args,sign):
     if(atr == 0):
         return 0.0
 
-    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR() - w5 * Comprehensibility(args)
+    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR(args) - w5 * Comprehensibility(args)
+    # fit_score = 0.7 * G_measure_ave(args,sign)  - 0.3 * Comprehensibility(args)
 
     return -1 * fit_score

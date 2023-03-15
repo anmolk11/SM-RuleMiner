@@ -5,7 +5,7 @@ import os
 from tqdm import tqdm
 
 
-from Fitness.fitness_1 import fun
+from Fitness.orginal_fitness import fun
 
 from read_rule import *
 from data import *
@@ -157,6 +157,8 @@ def initialize(sign,fitness_function):
         LocalMin[k] = fun_val[int(gpoint[k][0])]
         LocalLimitCount[k] = 0
         LocalLeaderPosition[k] = Population[int(gpoint[k][0])]
+    
+    count = 0
 
 def LocalLeaderPhase(k,sign,fitness_function):
     global lo,hi,cr
@@ -274,8 +276,11 @@ def printVector():
 
 if __name__ == "__main__":
         fitness_function = fun
-        rule_log = "fitness1_rule_log"
-        test_log = "fitness1_test_log"
+        rule_log = "orginal_fitness_rule_log"
+        test_log = "orginal_fitness_test_log"
+
+        logResults = False
+
         try:
             os.remove("Logs/rules.txt")
         except OSError:
@@ -284,6 +289,7 @@ if __name__ == "__main__":
         main_time = time.time()
         run = 0
         classes = [0,1]
+        # classes = [0]
         rule_set_pos = []
         rule_set_neg = []
         for i in tqdm(range(len(classes)),desc="Class",colour="red"):
@@ -330,12 +336,14 @@ if __name__ == "__main__":
 
                 size = df.shape[0]
                 score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-                logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
+                if logResults:
+                    logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
                 
         acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
         acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
 
-        logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
+        if logResults:
+            logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
         
         print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
         print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
