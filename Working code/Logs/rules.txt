@@ -1,0 +1,32 @@
+Rule num : 1
+Class : 0
+4.323169198781709 <= SkinThickness <= 99.0 
+Hits scored : 251
+
+--------------
+Rule num : 2
+Class : 0
+0.0 <= BMI <= 28.721722493346423 
+Hits scored : 58
+
+--------------
+Rule num : 3
+Class : 0
+17.145169127308964 <= Glucose <= 134.97603617267592 
+32.33362679748729 <= BMI <= 39.94581300180347 
+Hits scored : 17
+
+--------------
+Rule num : 4
+Class : 1
+10.856223719898875 <= SkinThickness <= 71.07990472090816 
+Hits scored : 127
+
+--------------
+Rule num : 5
+Class : 1
+0.0 <= SkinThickness <= 94.73798967910547 
+31.430721847434565 <= Age <= 67.90980032219797 
+Hits scored : 42
+
+--------------

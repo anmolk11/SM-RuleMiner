@@ -2,13 +2,16 @@ import numpy as np
 import random
 import time
 import os
-import openpyxl
-import datetime
+from tqdm import tqdm
 
-from fitness import fun
+
+from Fitness.orginal_fitness import fun
+
 from read_rule import *
 from data import *
 from test import accuracy
+from log import *
+
 
 threshold = 30
 Pop_size = 80
@@ -135,7 +138,7 @@ def LocalLearning(sign):
         else:
             LocalLimitCount[k] = 0
 
-def initialize(sign):
+def initialize(sign,fitness_function):
     global GlobalMin
     global GlobalLeaderPosition
     global GlobalLimitCount
@@ -143,7 +146,7 @@ def initialize(sign):
         for j in range(D):
             Population[i][j] = random.uniform(0, 1) * (ub[j] - lb[j]) + lb[j]
             new_position[j] = Population[i][j]
-        fun_val[i] = fun(new_position,sign)
+        fun_val[i] = fitness_function(new_position,sign)
         fitness[i] = CalculateFitness(fun_val[i])
 
     GlobalMin = fun_val[0]
@@ -154,8 +157,10 @@ def initialize(sign):
         LocalMin[k] = fun_val[int(gpoint[k][0])]
         LocalLimitCount[k] = 0
         LocalLeaderPosition[k] = Population[int(gpoint[k][0])]
+    
+    count = 0
 
-def LocalLeaderPhase(k,sign):
+def LocalLeaderPhase(k,sign,fitness_function):
     global lo,hi,cr
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
@@ -174,7 +179,7 @@ def LocalLeaderPhase(k,sign):
             if new_position[j] > ub[j]:
                 new_position[j] = ub[j]
 
-        ObjValSol = fun(new_position,sign)
+        ObjValSol = fitness_function(new_position,sign)
         FitnessSol = CalculateFitness(ObjValSol)
         if FitnessSol > fitness[i]:
             for j in range(D):
@@ -183,7 +188,7 @@ def LocalLeaderPhase(k,sign):
             fitness[i] = FitnessSol
     
 
-def GlobalLeaderPhase(k,sign):
+def GlobalLeaderPhase(k,sign,fitness_function):
     lo = int(gpoint[k][0])
     hi = int(gpoint[k][1])
     i = lo
@@ -204,7 +209,7 @@ def GlobalLeaderPhase(k,sign):
                 new_position[param2change] = lb[param2change]
             if new_position[param2change] > ub[param2change]:
                 new_position[param2change] = ub[param2change]
-            ObjValSol = fun(new_position,sign)
+            ObjValSol = fitness_function(new_position,sign)
             FitnessSol = CalculateFitness(ObjValSol)
             if FitnessSol > fitness[i]:
                 for j in range(D):
@@ -269,47 +274,26 @@ def printVector():
             print(GlobalLeaderPosition[i],end="   ")
     print("\n-----------------------------------------------------------\n")
 
-def writeLog(p_ave,p_best,n_ave,n_best):
-    workbook = openpyxl.load_workbook("log_testing.xlsx")
-    sheet = workbook.active
-    now = datetime.datetime.now()
-    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
-    workbook.save("log_testing.xlsx")
-
-def logRules(attr,sign,hit_ratio):
-    workbook = openpyxl.load_workbook("log_rules.xlsx")
-    sheet = workbook.active
-    now = datetime.datetime.now()
-    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    
-    for i in range(len(attr)):
-        if i % 3 == 0:
-            if attr[i] >= cutoff:
-                attr[i] = 1
-            else:
-                attr[i] = 0
-    for i in range(1,len(attr),3):
-        mx = max(attr[i],attr[i + 1])
-        mn = min(attr[i],attr[i + 1])
-        attr[i] = mn
-        attr[i + 1] = mx
-        
-    sheet.append([current_date_time] + attr + [sign,hit_ratio])
-    workbook.save("log_rules.xlsx")
-    
-
 if __name__ == "__main__":
+        fitness_function = fun
+        rule_log = "orginal_fitness_rule_log"
+        test_log = "orginal_fitness_test_log"
+
+        logResults = False
+
         try:
-            os.remove("rules.txt")
+            os.remove("Logs/rules.txt")
         except OSError:
             pass
+
         main_time = time.time()
         run = 0
         classes = [0,1]
+        # classes = [0]
         rule_set_pos = []
         rule_set_neg = []
-        for cat in classes:
+        for i in tqdm(range(len(classes)),desc="Class",colour="red"):
+            cat = classes[i]
             initilize_params(cat)
             df = pd.DataFrame()
             if(cat == 0):
@@ -318,21 +302,21 @@ if __name__ == "__main__":
                 df = df_pos_train
             while df.shape[0] > threshold:
                 start_time = time.time()
-                initialize(cat)
+                initialize(cat,fitness_function)
                 GlobalLearning(cat)
                 LocalLearning(cat)
                 fevel = 0
                 part = 1
                 create_group(cat)
 
-                for iter in range(Max_iterations):
-                    for k in range(group):
-                        LocalLeaderPhase(k,cat)
+                for iter in tqdm(range(Max_iterations),desc="LocalLeaderPhase",colour="blue"):
+                    for k in tqdm(range(group),desc="LocalLeaderPhase",colour="cyan"):
+                        LocalLeaderPhase(k,cat,fitness_function)
 
                     CalculateProbabilities(cat)
 
-                    for k in range(group):
-                        GlobalLeaderPhase(k,cat)
+                    for k in tqdm(range(group),desc="GlobalLeaderPhase",colour="green"):
+                        GlobalLeaderPhase(k,cat,fitness_function)
                     
                     GlobalLearning(cat)
                     LocalLearning(cat)
@@ -352,12 +336,14 @@ if __name__ == "__main__":
 
                 size = df.shape[0]
                 score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-                logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size)
+                if logResults:
+                    logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
                 
         acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
         acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
 
-        writeLog(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best)
+        if logResults:
+            logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
         
         print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
         print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")

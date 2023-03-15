@@ -1,6 +1,18 @@
-from fitness import *
 import os
 from data import *
+
+cutoff = 0.5
+
+def makeMonkey(args):
+    monkey = {}
+    
+    i = 0
+    
+    for j in range(0,24,3):
+        monkey[i] = args[j:j+3]
+        i += 1
+    
+    return monkey
 
 num_rule = 1
 
@@ -12,7 +24,7 @@ def delRows(args,sign,displayRules = True):
         df = df_pos_train
 
     global num_rule
-    file = open("rules.txt","a")
+    file = open("Logs/rules.txt","a")
     file.write(f"Rule num : {num_rule}\n")
     file.write(f"Class : {sign}\n")
     num_rule += 1

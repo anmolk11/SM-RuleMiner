@@ -60,18 +60,46 @@ def G_measure_ave(args,sign):
     recall = Tp/(Tp + Fn) if Tp > 0 else 0
     precision = Tp/(Tp + Fp) if Tp > 0 else 0
     
-    G_measure_pos = math.sqrt(recall * precision)
-    
+    if recall + precision > 0:
+        G_measure_pos = (2 * recall * precision)/(recall + precision)
+    else:
+        G_measure_pos = 0
+
     inverse_recall = Tn/(Tn + Fp) if Tn > 0 else 0
     inverse_precision = Tn/(Tn + Fn) if Tn > 0 else 0
     
-    G_measure_neg = math.sqrt(inverse_recall * inverse_precision)
-    
+    if inverse_recall + inverse_precision > 0:
+        G_measure_neg = (2 * inverse_recall * inverse_precision)/(inverse_recall + inverse_precision)
+    else:
+        G_measure_neg = 0
+        
     return w1 * G_measure_pos + w2 * G_measure_neg
     
+# Mean Interval Range    
+def MIR(args):
+    attMax = [13, 197, 122, 60, 744, 57.3, 2.329, 72]
     
-def MIR():
-    return 1
+    attMin = [0,    0,   0,   0,  0,  0.0,   0.078, 21]
+
+    mir = 0
+    
+    colInd = 0
+    
+    D = 0
+
+    for i in range(0,len(args),3):
+        if args[i] >= cutoff:
+            D += 1
+            ubi = max(args[i + 1],args[i + 2])
+            lbi = min(args[i + 1],args[i + 2])
+            attr_max = attMax[colInd]
+            attr_min = attMin[colInd]
+            mir += (ubi - lbi)/(attr_max - attr_min)
+        colInd += 1
+
+    if D == 0:
+        return 0
+    return mir/D
     
 def Comprehensibility(args):
     num_attr = 0
@@ -91,54 +119,6 @@ def fun(args,sign):
     if(atr == 0):
         return 0.0
 
-    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR() - w5 * Comprehensibility(args)
-
-    # print(fit_score)
+    fit_score = w3 * G_measure_ave(args,sign) + w4 * MIR(args) - w5 * Comprehensibility(args)
 
     return -1 * fit_score
-
-
-# def fun(spiderMonkey,sign = 0):
-    
-#     spiderMonkey = makeMonkey(spiderMonkey)
-    
-#     hits = 0
-    
-#     for i in range(0,df.shape[0]):
-#         ok = True
-#         inside = False
-#         for k,v in spiderMonkey.items():
-#             if v[0] == 1:
-#                 inside = True
-#                 if df.iloc[i][col[k]] < v[1] or df.iloc[i][col[k]] > v[2]:
-#                     ok = False
-#                     break
-#         if ok and df.iloc[i]["Outcome"] == sign and inside:
-#             hits += 1
-
-#     # print(hits)
-
-#     return -1 * hits
-
-# def fun(spiderMonkey,sign = 0):
-#     hits = 0
-#     df = pd.DataFrame()
-#     if sign == 0:
-#         df = df_neg_train
-#     else:
-#         df = df_pos_train
-        
-#     spiderMonkey = makeMonkey(spiderMonkey)
-#     for ind,row in df.iterrows():
-#         rule_satisfied = True
-#         inside = False
-#         for k,v in spiderMonkey.items():
-#             if v[0] >= cutoff:
-#                 inside = True
-#                 if (row[col[k]] < v[1]) or (row[col[k]] > v[2]):
-#                     rule_satisfied = False
-#                     break
-#         if inside and rule_satisfied:
-#             hits += 1
-
-#         return -1 * hits
