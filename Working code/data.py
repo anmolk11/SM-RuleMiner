@@ -6,6 +6,8 @@ df_all = pd.read_csv("Data/diabetes.csv")
 
 col = df_all.columns.tolist()
 
+ratio = 0.2
+
 # print(col)
 
 df_pos_train = df_all[df_all["Outcome"] == 1]
@@ -19,8 +21,8 @@ Y_neg = df_neg_train[col[-1]]
 
 
 
-df_pos_train, df_pos_test, y_train, y_test = train_test_split(X_pos, Y_pos, test_size=0.3, random_state=0)
-df_neg_train, df_neg_test, y_train, y_test = train_test_split(X_neg, Y_neg, test_size=0.3, random_state=0)
+df_pos_train, df_pos_test, y_train, y_test = train_test_split(X_pos, Y_pos, test_size= ratio, random_state=0)
+df_neg_train, df_neg_test, y_train, y_test = train_test_split(X_neg, Y_neg, test_size= ratio, random_state=0)
 
 # df_pos_test.to_csv("df_pos_test.csv")
 # df_neg_test.to_csv("df_neg_test.csv")
