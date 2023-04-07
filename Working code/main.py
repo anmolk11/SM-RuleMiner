@@ -13,7 +13,7 @@ from test import accuracy
 from log import *
 
 
-threshold = 30
+threshold = 10
 Pop_size = 80
 Max_iterations = 3
 Total_Run = 1
@@ -275,81 +275,79 @@ def printVector():
     print("\n-----------------------------------------------------------\n")
 
 
-if __name__ == "__main__":
-        fitness_function = fun
-        rule_log = "orginal_fitness_rule_log"
-        test_log = "orginal_fitness_test_log"
+def smo(df,sign):
+    """"  takes the dataframe and makes the rules out of it,logs the rules and its results in diff log files """
+    global fevel,part
+    fitness_function = fun
+    rule_log = "orginal_fitness_rule_log"
+    test_log = "orginal_fitness_test_log"
+    cat = sign
+    logResults = False
 
-        logResults = False
+    try:
+        os.remove("Logs/rules.txt")
+    except OSError:
+        pass
 
-        try:
-            os.remove("Logs/rules.txt")
-        except OSError:
-            pass
+    main_time = time.time()
+    run = 0
+    rule_set_pos = []
+    rule_set_neg = []
+    initilize_params(cat)
+    while df.shape[0] > threshold:
+        start_time = time.time()
+        initialize(cat,fitness_function)
+        GlobalLearning(cat)
+        LocalLearning(cat)
+        fevel = 0
+        part = 1
+        create_group(cat)
 
-        main_time = time.time()
-        run = 0
-        classes = [0,1]
-        rule_set_pos = []
-        rule_set_neg = []
-        for i in tqdm(range(len(classes)),desc="Class",colour="red"):
-            cat = classes[i]
-            initilize_params(cat)
-            df = pd.DataFrame()
-            if(cat == 0):
-                df = df_neg_train
-            else:
-                df = df_pos_train
-            while df.shape[0] > threshold:
-                start_time = time.time()
-                initialize(cat,fitness_function)
-                GlobalLearning(cat)
-                LocalLearning(cat)
-                fevel = 0
-                part = 1
-                create_group(cat)
+        for iter in tqdm(range(Max_iterations),desc="LocalLeaderPhase",colour="blue"):
+            for k in tqdm(range(group),desc="LocalLeaderPhase",colour="cyan"):
+                LocalLeaderPhase(k,cat,fitness_function)
 
-                for iter in tqdm(range(Max_iterations),desc="LocalLeaderPhase",colour="blue"):
-                    for k in tqdm(range(group),desc="LocalLeaderPhase",colour="cyan"):
-                        LocalLeaderPhase(k,cat,fitness_function)
+            CalculateProbabilities(cat)
 
-                    CalculateProbabilities(cat)
+            for k in tqdm(range(group),desc="GlobalLeaderPhase",colour="green"):
+                GlobalLeaderPhase(k,cat,fitness_function)
+            
+            GlobalLearning(cat)
+            LocalLearning(cat)
+            LocalLeaderDecision(cat)
+            GlobalLeaderDecision(cat)
 
-                    for k in tqdm(range(group),desc="GlobalLeaderPhase",colour="green"):
-                        GlobalLeaderPhase(k,cat,fitness_function)
-                    
-                    GlobalLearning(cat)
-                    LocalLearning(cat)
-                    LocalLeaderDecision(cat)
-                    GlobalLeaderDecision(cat)
+            if abs(GlobalMin - obj_val) <= acc_err:
+                break
 
-                    if abs(GlobalMin - obj_val) <= acc_err:
-                        break
-
-                    cr = cr + 0.4/Max_iterations
-                    GlobalMins[run] = GlobalMin
-                
-                if cat == 0:
-                    rule_set_neg.append(GlobalLeaderPosition[:D].tolist())
-                else:
-                    rule_set_pos.append(GlobalLeaderPosition[:D].tolist())
-
-                size = df.shape[0]
-                score = delRows(GlobalLeaderPosition,cat,displayRules = False)
-                if logResults:
-                    logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
-                
-        acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
-        acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
-
-        if logResults:
-            logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
+            cr = cr + 0.4/Max_iterations
+            GlobalMins[run] = GlobalMin
         
-        print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
-        print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
-        print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
-        print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
+        if cat == 0:
+            rule_set_neg.append(GlobalLeaderPosition[:D].tolist())
+        else:
+            rule_set_pos.append(GlobalLeaderPosition[:D].tolist())
 
-        print("\n----------------------------------------------------------\n")
-        print("Total execution time : ",end = " ")
-        print(" %s seconds " % (time.time() - main_time),end = "\n\n")
+        size = df.shape[0]
+        score = delRows(GlobalLeaderPosition,cat,displayRules = False)
+        if logResults:
+            logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
+            
+    acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
+    acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
+
+    if logResults:
+        logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
+    
+    print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
+    print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
+    print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
+    print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
+
+    print("\n----------------------------------------------------------\n")
+    print("Total execution time : ",end = " ")
+    print(" %s seconds " % (time.time() - main_time),end = "\n\n")
+
+
+if __name__ == "__main__":
+    pass

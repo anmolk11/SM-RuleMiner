@@ -16,13 +16,7 @@ def makeMonkey(args):
 
 num_rule = 1
 
-def delRows(args,sign,displayRules = True):
-    df = pd.DataFrame()
-    if sign == 0:
-        df = df_neg_train
-    else:
-        df = df_pos_train
-
+def delRows(args,df,sign,displayRules = True):
     global num_rule
     file = open("Logs/rules.txt","a")
     file.write(f"Rule num : {num_rule}\n")
