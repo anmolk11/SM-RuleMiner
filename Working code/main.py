@@ -276,8 +276,8 @@ def printVector():
 
 
 def smo(df,sign):
-    """"  takes the dataframe and makes the rules out of it,logs the rules and its results in diff log files """
-    global fevel,part
+    """ takes the dataframe and makes the rules out of it,logs the rules and its results in diff log files """
+    global fevel,part,cr
     fitness_function = fun
     rule_log = "orginal_fitness_rule_log"
     test_log = "orginal_fitness_test_log"
@@ -291,9 +291,11 @@ def smo(df,sign):
 
     main_time = time.time()
     run = 0
-    rule_set_pos = []
-    rule_set_neg = []
+    rule_set = []
     initilize_params(cat)
+
+    # this while loop is the core sm-RuleMiner
+
     while df.shape[0] > threshold:
         start_time = time.time()
         initialize(cat,fitness_function)
@@ -323,31 +325,35 @@ def smo(df,sign):
             cr = cr + 0.4/Max_iterations
             GlobalMins[run] = GlobalMin
         
-        if cat == 0:
-            rule_set_neg.append(GlobalLeaderPosition[:D].tolist())
-        else:
-            rule_set_pos.append(GlobalLeaderPosition[:D].tolist())
-
+        
+        rule_set.append(GlobalLeaderPosition[:D].tolist())
         size = df.shape[0]
-        score = delRows(GlobalLeaderPosition,cat,displayRules = False)
+        score = delRows(GlobalLeaderPosition,df,cat,displayRules = False)
         if logResults:
             logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
             
-    acc_neg_avg,acc_neg_best = accuracy(rule_set_neg,0)
-    acc_pos_avg,acc_pos_best = accuracy(rule_set_pos,1)
+    acc_avg,acc_best = accuracy(rule_set,cat)
 
-    if logResults:
-        logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
+    # if logResults:
+    #     logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
     
-    print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
-    print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
-    print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
-    print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
+    # print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
+    # print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
+    # print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
+    # print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
 
-    print("\n----------------------------------------------------------\n")
-    print("Total execution time : ",end = " ")
-    print(" %s seconds " % (time.time() - main_time),end = "\n\n")
+    # print("\n----------------------------------------------------------\n")
+    # print("Total execution time : ",end = " ")
+    # print(" %s seconds " % (time.time() - main_time),end = "\n\n")
+
+    return rule_set
 
 
 if __name__ == "__main__":
-    pass
+    df = df_pos_train
+    sign = 1
+    rules = smo(df,sign)
+    for i,rule in enumerate(rules):
+        print(i)
+        print(rule)
+
