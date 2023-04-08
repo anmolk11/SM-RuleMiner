@@ -8,7 +8,6 @@ from tqdm import tqdm
 from Fitness.orginal_fitness import fun
 
 from read_rule import *
-from data import *
 from test import accuracy
 from log import *
 
@@ -329,31 +328,11 @@ def smo(df,sign):
         rule_set.append(GlobalLeaderPosition[:D].tolist())
         size = df.shape[0]
         score = delRows(GlobalLeaderPosition,df,cat,displayRules = False)
-        if logResults:
-            logRules(GlobalLeaderPosition[:D].tolist(),cat,score/size,rule_log)
-            
-    acc_avg,acc_best = accuracy(rule_set,cat)
-
-    # if logResults:
-    #     logTesting(acc_pos_avg,acc_pos_best,acc_neg_avg,acc_neg_best,test_log)
-    
-    # print(f"\nAverage accuracy for Positve class rules : {round(acc_pos_avg,2)}%\n")
-    # print(f"Best accuracy for Positve class rules : {round(acc_pos_best,2)}%\n\n")
-    # print(f"Average accuracy for Negative class rules : {round(acc_neg_avg,2)}%\n")
-    # print(f"Best accuracy for Negative class rules : {round(acc_neg_best,2)}%")
-
-    # print("\n----------------------------------------------------------\n")
-    # print("Total execution time : ",end = " ")
-    # print(" %s seconds " % (time.time() - main_time),end = "\n\n")
 
     return rule_set
 
 
 if __name__ == "__main__":
-    df = df_pos_train
-    sign = 1
-    rules = smo(df,sign)
-    for i,rule in enumerate(rules):
-        print(i)
-        print(rule)
+    pass
+    
 

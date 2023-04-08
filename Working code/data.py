@@ -8,8 +8,6 @@ col = df_all.columns.tolist()
 
 ratio = 0.2
 
-# print(col)
-
 df_pos_train = df_all[df_all["Outcome"] == 1]
 df_neg_train = df_all[df_all["Outcome"] == 0]
 
