@@ -3,6 +3,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
 
 from main import smo
+from union import union
 
 ratio = 0.2
 bootstraps = 5
@@ -30,10 +31,6 @@ if __name__ == "__main__":
         X_bs, y_bs = resample(df_pos_train, y_pos_train, replace=True)
         rules = smo(X_bs,1)
         positive_rules.append(rules)
-    
-
-    for rule in positive_rules:
-        print(len(rule))    
 
 
 
