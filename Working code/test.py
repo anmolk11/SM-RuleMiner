@@ -14,14 +14,9 @@ def makeMonkey(args):
     
     return monkey
 
-def score(rule,sign):
+def score(df,rule,sign):
     df = pd.DataFrame()
     rule = makeMonkey(rule) 
-
-    if sign == 0:
-        df = df_neg_test
-    else:
-        df = df_pos_test
     hits = 0
     N = df.shape[0]
     for ind,row in df.iterrows():
@@ -38,12 +33,12 @@ def score(rule,sign):
     # print(f"{sign} Hits : {hits}\n\n")
     return hits/N
 
-def accuracy(rule_set,sign):
+def accuracy(df,rule_set,sign):
     acc = 0
     best = 0
     N = len(rule_set)
     for rule in rule_set:
-        s = score(rule,sign)
+        s = score(df,rule,sign)
         best = max(s,best)
         acc += s
     

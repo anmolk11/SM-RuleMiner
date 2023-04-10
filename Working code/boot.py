@@ -4,6 +4,7 @@ from sklearn.utils import resample
 
 from main import smo
 from union import union
+from read_rule import read
 
 ratio = 0.2
 bootstraps = 5
@@ -33,4 +34,35 @@ if __name__ == "__main__":
         positive_rules.append(rules)
 
 
+    negative_rules = []
+
+    for i in range(bootstraps):
+        X_bs, y_bs = resample(df_neg_train, y_neg_train, replace=True)
+        rules = smo(X_bs,0)
+        negative_rules.append(rules)
+    
+
+    union_positive = []
+    for rules in positive_rules:
+        union_positive.append(union(rules))
+    
+
+    union_negative = []
+    for rules in negative_rules:
+        union_negative.append(union(rules))
+    
+    
+    for rule in union_positive:
+        read(rule,1,col,display=True)
+    
+    print("\n---------------------------------------------------------------------\n")
+
+    for rule in union_negative:
+        read(rule,0,col,display=True)
+    
+
+    
+
+
+    
 

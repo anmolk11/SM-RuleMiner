@@ -7,12 +7,12 @@ from tqdm import tqdm
 
 from Fitness.orginal_fitness import fun
 
-from read_rule import *
+from drop_rows import *
 from test import accuracy
 from log import *
 
 
-threshold = 10
+threshold = 30
 Pop_size = 80
 Max_iterations = 3
 Total_Run = 1
@@ -327,7 +327,7 @@ def smo(df,sign):
         
         rule_set.append(GlobalLeaderPosition[:D].tolist())
         size = df.shape[0]
-        score = delRows(GlobalLeaderPosition,df,cat,displayRules = False)
+        score = delRows(GlobalLeaderPosition,df,cat)
 
     return rule_set
 
