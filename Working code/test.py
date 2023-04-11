@@ -1,6 +1,3 @@
-from data import *
-import pandas as pd
-
 cutoff = 0.5
 
 def makeMonkey(args):
@@ -15,7 +12,7 @@ def makeMonkey(args):
     return monkey
 
 def score(df,rule,sign):
-    df = pd.DataFrame()
+    col = df.columns
     rule = makeMonkey(rule) 
     hits = 0
     N = df.shape[0]
@@ -30,7 +27,6 @@ def score(df,rule,sign):
                     break
         if rule_sat:
             hits += 1
-    # print(f"{sign} Hits : {hits}\n\n")
     return hits/N
 
 def accuracy(df,rule_set,sign):

@@ -278,17 +278,7 @@ def smo(df,sign):
     """ takes the dataframe and makes the rules out of it,logs the rules and its results in diff log files """
     global fevel,part,cr
     fitness_function = fun
-    rule_log = "orginal_fitness_rule_log"
-    test_log = "orginal_fitness_test_log"
     cat = sign
-    logResults = False
-
-    try:
-        os.remove("Logs/rules.txt")
-    except OSError:
-        pass
-
-    main_time = time.time()
     run = 0
     rule_set = []
     initilize_params(cat)
@@ -296,7 +286,6 @@ def smo(df,sign):
     # this while loop is the core sm-RuleMiner
 
     while df.shape[0] > threshold:
-        start_time = time.time()
         initialize(cat,fitness_function)
         GlobalLearning(cat)
         LocalLearning(cat)
@@ -326,7 +315,6 @@ def smo(df,sign):
         
         
         rule_set.append(GlobalLeaderPosition[:D].tolist())
-        size = df.shape[0]
         score = delRows(GlobalLeaderPosition,df,cat)
 
     return rule_set
