@@ -66,17 +66,17 @@ def method1():
     union_positive = []
     for rules in positive_rules:
         print(len(rules))
-        union_positive.append(union(rules))
+        union_positive.append(union_OR(rules))
     
 
     union_negative = []
     for rules in negative_rules:
         print(len(rules))
-        union_negative.append(union(rules))
+        union_negative.append(union_OR(rules))
     
     
-    final_pos_rule = union(union_positive)
-    final_neg_rule = union(union_negative)
+    final_pos_rule = union_OR(union_positive)
+    final_neg_rule = union_OR(union_negative)
 
     read(final_pos_rule,1,display=False)
     read(final_neg_rule,0,display=False)
@@ -93,8 +93,6 @@ def method2():
     for i in range(bootstraps):
         X_bs, y_bs = resample(df_pos_train, y_pos_train, replace=True)
         rules = smo(X_bs,1)
-        print(rules)
-        return
         positive_rules.append(rules)
 
     negative_rules = []
@@ -114,8 +112,8 @@ def method2():
         union_negative.append(pickBest(rules,df_neg_test,0))
     
     
-    final_pos_rule = union(union_positive)
-    final_neg_rule = union(union_negative)
+    final_pos_rule = union_OR(union_positive)
+    final_neg_rule = union_OR(union_negative)
 
     read(final_pos_rule,1,display=False)
     read(final_neg_rule,0,display=False)
@@ -131,9 +129,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # method1()
-    # method2()
-
-    print(col)
+    method2()
 
     print("\n--------------------------------------------\n")
     print(f"\nTotal execution time : {(time.time() - start_time)/60} min")
