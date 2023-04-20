@@ -6,7 +6,7 @@ from sklearn.utils import resample
 
 
 from main import smo
-from union import union
+from union import union_OR
 from read_rule import read
 from test import score
 
@@ -78,8 +78,8 @@ def method1():
     final_pos_rule = union(union_positive)
     final_neg_rule = union(union_negative)
 
-    read(final_pos_rule,1,col,display=False)
-    read(final_neg_rule,0,col,display=False)
+    read(final_pos_rule,1,display=False)
+    read(final_neg_rule,0,display=False)
 
     pos_rule_acc = score(df_pos_test,final_pos_rule,1)
     neg_rule_acc = score(df_neg_test,final_neg_rule,0)
@@ -93,8 +93,9 @@ def method2():
     for i in range(bootstraps):
         X_bs, y_bs = resample(df_pos_train, y_pos_train, replace=True)
         rules = smo(X_bs,1)
+        print(rules)
+        return
         positive_rules.append(rules)
-
 
     negative_rules = []
 
@@ -102,7 +103,6 @@ def method2():
         X_bs, y_bs = resample(df_neg_train, y_neg_train, replace=True)
         rules = smo(X_bs,0)
         negative_rules.append(rules)
-    
 
     union_positive = []
     for rules in positive_rules:
@@ -117,8 +117,8 @@ def method2():
     final_pos_rule = union(union_positive)
     final_neg_rule = union(union_negative)
 
-    read(final_pos_rule,1,col,display=False)
-    read(final_neg_rule,0,col,display=False)
+    read(final_pos_rule,1,display=False)
+    read(final_neg_rule,0,display=False)
 
     pos_rule_acc = score(df_pos_test,final_pos_rule,1)
     neg_rule_acc = score(df_neg_test,final_neg_rule,0)
@@ -131,7 +131,9 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # method1()
-    method2()
+    # method2()
+
+    print(col)
 
     print("\n--------------------------------------------\n")
     print(f"\nTotal execution time : {(time.time() - start_time)/60} min")

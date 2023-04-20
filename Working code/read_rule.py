@@ -1,4 +1,5 @@
 cutoff = 0.5
+col = ['Pregnancies', 'Glucose', 'BloodPressure', 'SkinThickness', 'Insulin', 'BMI', 'DiabetesPedigreeFunction', 'Age', 'Outcome']
 def makeMonkey(args):
     monkey = {}
     
@@ -10,7 +11,7 @@ def makeMonkey(args):
     
     return monkey
 
-def read(args,sign,col,display = False):
+def read(args,sign,display = False):
     file = open(f"Logs/rule_{sign}.txt","w")
     if(display):
         print(f"Class : {sign}\n")
