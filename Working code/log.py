@@ -4,37 +4,13 @@ import os
 
 cutoff = 0.5
 
-testing = ["Time","P_avg","P_best","N_avg","N_best"]
+# rules = ["Date Time", "Pregnancies_flag" ,"Pregnancies_lb","Pregnancies_ub","Glucose_flag","Glucose_lb","Glucose_ub","BP_flag","BP_lb","BP_ub","SkinThickness_flag","SkinThickness_lb","SkinThickness_ub","Insulin_flag","Insulin_lb","Insulin_ub","BMI_flag","BMI_lb","BMI_ub","DPF_flag","DPF_lb","DPF_ub","Age_flag","Age_lb","Age_ub","Class","Hit Ratio"]
 
-rules = ["Date Time", "Pregnancies_flag" ,"Pregnancies_lb","Pregnancies_ub","Glucose_flag","Glucose_lb","Glucose_ub","BP_flag","BP_lb","BP_ub","SkinThickness_flag","SkinThickness_lb","SkinThickness_ub","Insulin_flag","Insulin_lb","Insulin_ub","BMI_flag","BMI_lb","BMI_ub","DPF_flag","DPF_lb","DPF_ub","Age_flag","Age_lb","Age_ub","Class","Hit Ratio"]
-
-def logTesting(p_ave,p_best,n_ave,n_best,file_name):
+def log(attr,accuracy,file_name):
     file_name = "Logs/" + file_name + ".xlsx"
 
-    if os.path.exists(file_name) == False:
-       workbook = openpyxl.Workbook()
-       sheet = workbook.active
-       sheet.append(testing) 
-    else:
-        workbook = openpyxl.load_workbook(file_name)
-        sheet = workbook.active
-    
-    now = datetime.datetime.now()
-    current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
-    sheet.append([current_date_time, p_ave,p_best,n_ave,n_best])
-    workbook.save(file_name)
-
-def logRules(attr,sign,hit_ratio,file_name):
-    file_name = "Logs/" + file_name + ".xlsx"
-
-
-    if os.path.exists(file_name) == False:
-       workbook = openpyxl.Workbook()
-       sheet = workbook.active
-       sheet.append(rules) 
-    else:
-        workbook = openpyxl.load_workbook(file_name)
-        sheet = workbook.active
+    workbook = openpyxl.load_workbook(file_name)
+    sheet = workbook.active
 
     now = datetime.datetime.now()
     current_date_time = now.strftime("%Y-%m-%d %H:%M:%S")
@@ -51,5 +27,5 @@ def logRules(attr,sign,hit_ratio,file_name):
         attr[i] = mn
         attr[i + 1] = mx
         
-    sheet.append([current_date_time] + attr + [sign,hit_ratio])
+    sheet.append([current_date_time] + attr + [accuracy])
     workbook.save(file_name)

@@ -9,6 +9,7 @@ from main import smo
 from union import union_OR
 from read_rule import read
 from test import score
+from log import log 
 
 ratio = 0.2
 bootstraps = 5
@@ -39,7 +40,7 @@ def pickBest(ruleset,df,sign):
             best = scr
             pick = rule
 
-    return pick
+    return pick,best
 
 
 def method1():
@@ -104,12 +105,16 @@ def method2():
 
     union_positive = []
     for rules in positive_rules:
-        union_positive.append(pickBest(rules,df_pos_test,1))
+        best,accuracy = pickBest(rules,df_pos_test,1)
+        log(best,accuracy,"pos_picked")
+        union_positive.append(best)
     
 
     union_negative = []
     for rules in negative_rules:
-        union_negative.append(pickBest(rules,df_neg_test,0))
+        best,accuracy = pickBest(rules,df_neg_test,0)
+        log(best,accuracy,"neg_picked")
+        union_negative.append(best)
     
     
     final_pos_rule = union_OR(union_positive)
@@ -120,6 +125,9 @@ def method2():
 
     pos_rule_acc = score(df_pos_test,final_pos_rule,1)
     neg_rule_acc = score(df_neg_test,final_neg_rule,0)
+
+    log(final_neg_rule,neg_rule_acc,"neg_final")
+    log(final_pos_rule,pos_rule_acc,"pos_final")
 
     print(f"Postive : {pos_rule_acc * 100} %")
     print(f"Negative : {neg_rule_acc * 100} %")
