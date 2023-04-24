@@ -1,4 +1,6 @@
 Class : 0
-0.0 <= Pregnancies <= 13.111478838486365 
-5.159424522474602 <= Glucose <= 144.69893137932277 
-0.0 <= SkinThickness <= 98.01175852087351 
+0.0 <= Pregnancies <= 17.0 
+0.0 <= Glucose <= 158.50747884477752 
+0.0 <= BloodPressure <= 122.0 
+0.0 <= BMI <= 55.16863823451238 
+0.078 <= DiabetesPedigreeFunction <= 1.2815141594500745 
