@@ -140,4 +140,4 @@ if __name__ == "__main__":
     method2()
 
     print("\n--------------------------------------------\n")
-    print(f"\nTotal execution time : {(time.time() - start_time)/60} min")
+    print(f"\nTotal execution time : { round((time.time() - start_time)/60,2) } min")
