@@ -117,19 +117,9 @@ def method2(log_result = True):
         if log_result: 
             log(best,accuracy,"neg_picked")
         union_negative.append(best)
-    
-    
-    # final_pos_rule_ave = union_ave(union_positive)
-    # final_neg_rule_ave = union_ave(union_negative)
 
     final_pos_rule_or = union_OR(union_positive)
     final_neg_rule_or = union_OR(union_negative)
-
-    # read(final_pos_rule_ave,1,display=False)
-    # read(final_neg_rule_ave,0,display=False)
-
-    # pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
-    # neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
 
     pos_rule_acc_or = score(df_pos_test,final_pos_rule_or,1)
     neg_rule_acc_or = score(df_neg_test,final_neg_rule_or,0)
@@ -137,9 +127,6 @@ def method2(log_result = True):
     if log_result:
         log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
         log(final_pos_rule_or,pos_rule_acc_or,"pos_final")
-
-    # print(f"Postive A: {pos_rule_acc_ave * 100} %")
-    # print(f"Negative A: {neg_rule_acc_ave * 100} %")
 
     print(f"Postive O: {pos_rule_acc_or * 100} %")
     print(f"Negative O: {neg_rule_acc_or * 100} %")
@@ -149,7 +136,7 @@ if __name__ == "__main__":
     start_time = time.time()
 
     # method1()
-    method2(log_result=True)
+    method2(log_result=True) 
 
     print("\n--------------------------------------------\n")
     print(f"\nTotal execution time : { round((time.time() - start_time)/60,2) } min")
