@@ -14,7 +14,7 @@ def makeMonkey(args):
 def score(df,rule,sign):
     col = df.columns
     rule = makeMonkey(rule) 
-    hits = 0
+    T,F = 0,0
     N = df.shape[0]
     for ind,row in df.iterrows():
         rule_sat = True
@@ -26,16 +26,8 @@ def score(df,rule,sign):
                     rule_sat = False
                     break
         if rule_sat:
-            hits += 1
-    return hits/N
-
-def accuracy(df,rule_set,sign):
-    acc = 0
-    best = 0
-    N = len(rule_set)
-    for rule in rule_set:
-        s = score(df,rule,sign)
-        best = max(s,best)
-        acc += s
-    
-    return (acc/N) * 100,best * 100
+            if row["Outcome"] == sign:
+                T += 1
+            else:
+                F += 1
+    return T,F

@@ -8,7 +8,6 @@ from tqdm import tqdm
 from Fitness.orginal_fitness import fun
 
 from drop_rows import *
-from test import accuracy
 from log import *
 
 
