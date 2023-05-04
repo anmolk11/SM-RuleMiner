@@ -14,7 +14,27 @@ def makeMonkey(args):
 def score(df,rule,sign):
     col = df.columns
     rule = makeMonkey(rule) 
-    T,F = 0,0
+    pred = []
+    for ind,row in df.iterrows():
+        rule_sat = True
+        for k,v in rule.items():
+            if v[0] >= cutoff:
+                mn = min(v[1],v[2])
+                mx = max(v[1],v[2])
+                if (row[col[k]] < mn) or (row[col[k]] > mx):
+                    rule_sat = False
+                    break
+        if rule_sat:
+            pred.append(sign)
+        else:
+            pred.append(1 - sign)
+    return pred
+
+
+def score_perc(df,rule,sign):
+    col = df.columns
+    rule = makeMonkey(rule) 
+    hits = 0
     N = df.shape[0]
     for ind,row in df.iterrows():
         rule_sat = True
@@ -26,8 +46,5 @@ def score(df,rule,sign):
                     rule_sat = False
                     break
         if rule_sat:
-            if row["Outcome"] == sign:
-                T += 1
-            else:
-                F += 1
-    return T,F
+            hits += 1
+    return hits/N
