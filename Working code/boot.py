@@ -2,8 +2,9 @@ import pandas as pd
 import time
 from sklearn.model_selection import train_test_split
 from sklearn.utils import resample
-
-
+from imblearn.over_sampling import RandomOverSampler
+from imblearn.over_sampling import SMOTE
+from imblearn.over_sampling import ADASYN
 
 from main import smo
 from union import *
@@ -17,6 +18,25 @@ bootstraps = 5
 
 whole_data = pd.read_csv("Data/diabetes.csv")
 col = whole_data.columns.tolist()
+
+X = whole_data[col[:-1]]
+y = whole_data["Outcome"]
+
+# ros = RandomOverSampler()
+# X_resampled, y_resampled = ros.fit_resample(X, y)
+
+smote = SMOTE()
+X_resampled, y_resampled = smote.fit_resample(X, y)
+
+# adasyn = ADASYN()
+# X_resampled, y_resampled = adasyn.fit_resample(X, y)
+
+
+X_resampled_df = pd.DataFrame(X_resampled, columns=X.columns)
+y_resampled_df = pd.DataFrame(y_resampled, columns=['Outcome'])
+
+whole_data = pd.concat([X_resampled_df, y_resampled_df], axis=1)
+
 
 positive_data = whole_data[whole_data["Outcome"] == 1]
 negative_data = whole_data[whole_data["Outcome"] == 0]
@@ -89,19 +109,19 @@ def method1():
     print(f"Negative : {neg_rule_acc * 100} %")
 
 def method2(log_result = True):
-    positive_rules = []
-    
-    for i in range(bootstraps):
-        X_bs, y_bs = resample(df_pos_train, y_pos_train, replace=True)
-        rules = smo(X_bs,1)
-        positive_rules.append(rules)
-
     negative_rules = []
 
     for i in range(bootstraps):
         X_bs, y_bs = resample(df_neg_train, y_neg_train, replace=True)
         rules = smo(X_bs,0)
         negative_rules.append(rules)
+
+    positive_rules = []
+    
+    for i in range(bootstraps):
+        X_bs, y_bs = resample(df_pos_train, y_pos_train, replace=True)
+        rules = smo(X_bs,1)
+        positive_rules.append(rules)
 
     union_positive = []
     for rules in positive_rules:
@@ -117,39 +137,25 @@ def method2(log_result = True):
         if log_result: 
             log(best,accuracy,"neg_picked")
         union_negative.append(best)
-    
-    
-    # final_pos_rule_ave = union_ave(union_positive)
-    # final_neg_rule_ave = union_ave(union_negative)
 
-    final_pos_rule_or = union_OR(union_positive)
-    final_neg_rule_or = union_OR(union_negative)
+    final_pos_rule = union_OR(union_positive)
+    final_neg_rule = union_OR(union_negative)
 
-    # read(final_pos_rule_ave,1,display=False)
-    # read(final_neg_rule_ave,0,display=False)
-
-    # pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
-    # neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
-
-    pos_rule_acc_or = score(df_pos_test,final_pos_rule_or,1)
-    neg_rule_acc_or = score(df_neg_test,final_neg_rule_or,0)
+    pos_rule_acc = score(df_pos_test,final_pos_rule,1)
+    neg_rule_acc = score(df_neg_test,final_neg_rule,0)
 
     if log_result:
-        log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
-        log(final_pos_rule_or,pos_rule_acc_or,"pos_final")
+        log(final_neg_rule,neg_rule_acc,"neg_final")
+        log(final_pos_rule,pos_rule_acc,"pos_final")
 
-    # print(f"Postive A: {pos_rule_acc_ave * 100} %")
-    # print(f"Negative A: {neg_rule_acc_ave * 100} %")
+    print(f"Postive : {pos_rule_acc * 100} %")
+    print(f"Negative : {neg_rule_acc * 100} %")
 
-    print(f"Postive : {pos_rule_acc_or * 100} %")
-    print(f"Negative : {neg_rule_acc_or * 100} %")
-
-    print(f"Overall : {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
+    print(f"Overall : {(pos_rule_acc + neg_rule_acc)/2 * 100} %")
 
 
 if __name__ == "__main__":
     start_time = time.time()
-
     # method1()
     method2(log_result=True)
 
