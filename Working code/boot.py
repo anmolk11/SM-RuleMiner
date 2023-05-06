@@ -144,6 +144,8 @@ def method2(log_result = True):
     print(f"Postive O: {pos_rule_acc_or * 100} %")
     print(f"Negative O: {neg_rule_acc_or * 100} %")
 
+    
+
 
 if __name__ == "__main__":
     start_time = time.time()

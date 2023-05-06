@@ -75,10 +75,10 @@ def initilize_params(sign):
         cr = 0.2
         max_part = 4
     else:
-        LocalLimit = 200
+        LocalLimit = 400
         GlobalLimit = 80
         cr = 0.2
-        max_part = 6
+        max_part = 4
 
 
 def CalculateFitness(fun):
