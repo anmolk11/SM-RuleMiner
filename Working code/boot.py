@@ -141,10 +141,10 @@ def method2(log_result = True):
     # print(f"Postive A: {pos_rule_acc_ave * 100} %")
     # print(f"Negative A: {neg_rule_acc_ave * 100} %")
 
-    print(f"Postive O: {pos_rule_acc_or * 100} %")
-    print(f"Negative O: {neg_rule_acc_or * 100} %")
+    print(f"Postive : {pos_rule_acc_or * 100} %")
+    print(f"Negative : {neg_rule_acc_or * 100} %")
 
-    
+    print(f"Overall : {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
 
 
 if __name__ == "__main__":
