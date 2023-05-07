@@ -11,8 +11,11 @@ def makeMonkey(args):
     
     return monkey
 
-def read(args,sign,display = False):
-    file = open(f"Logs/rule_{sign}.txt","w")
+def read(args,sign,display = False,text = "*"):
+    file = open(f"Logs/rule_{sign}.txt","a")
+    if text != "*":
+        file.write("\n----\n" + text + "\n----\n")
+
     if(display):
         print(f"Class : {sign}\n")
     file.write(f"Class : {sign}\n")

@@ -96,17 +96,47 @@ def method1():
         union_negative.append(union_OR(rules))
     
     
-    final_pos_rule = union_OR(union_positive)
-    final_neg_rule = union_OR(union_negative)
+    final_pos_rule_or = union_OR(union_positive)
+    final_neg_rule_or = union_OR(union_negative)
+    read(final_pos_rule_or,1,display=False,text="OR M1")
+    read(final_neg_rule_or,0,display=False,text="OR M1")
 
-    read(final_pos_rule,1,display=False)
-    read(final_neg_rule,0,display=False)
+    final_pos_rule_and = union_AND(union_positive)
+    final_neg_rule_and = union_AND(union_negative)
+    read(final_pos_rule_and,1,display=False,text="AND M1")
+    read(final_neg_rule_and,0,display=False,text="AND M1")
 
-    pos_rule_acc = score(df_pos_test,final_pos_rule,1)
-    neg_rule_acc = score(df_neg_test,final_neg_rule,0)
+    final_pos_rule_ave = union_ave(union_positive)
+    final_neg_rule_ave = union_ave(union_negative)
+    read(final_pos_rule_ave,1,display=False,text="AVE M1")
+    read(final_neg_rule_ave,0,display=False,text="AVE M1")
 
-    print(f"Postive : {pos_rule_acc * 100} %")
-    print(f"Negative : {neg_rule_acc * 100} %")
+    pos_rule_acc_or = score(df_pos_test,final_pos_rule_or,1)
+    neg_rule_acc_or = score(df_neg_test,final_neg_rule_or,0)
+
+    pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
+    neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
+
+    pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
+    neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
+
+
+    print(f"Postive OR: {pos_rule_acc_or * 100} %")
+    print(f"Negative OR: {neg_rule_acc_or * 100} %")
+    print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
+
+    print("\n---------------------------------------\n")
+
+    
+    print(f"Postive and: {pos_rule_acc_and * 100} %")
+    print(f"Negative and: {neg_rule_acc_and * 100} %")
+    print(f"Overall and: {(pos_rule_acc_and + neg_rule_acc_and)/2 * 100} %")
+
+    print("\n---------------------------------------\n")
+
+    print(f"Postive ave: {pos_rule_acc_ave * 100} %")
+    print(f"Negative ave: {neg_rule_acc_ave * 100} %")
+    print(f"Overall ave: {(pos_rule_acc_ave + neg_rule_acc_ave)/2 * 100} %")
 
 def method2(log_result = True):
     negative_rules = []
@@ -138,26 +168,57 @@ def method2(log_result = True):
             log(best,accuracy,"neg_picked")
         union_negative.append(best)
 
-    final_pos_rule = union_OR(union_positive)
-    final_neg_rule = union_OR(union_negative)
+    final_pos_rule_or = union_OR(union_positive)
+    final_neg_rule_or = union_OR(union_negative)
+    read(final_pos_rule_or,1,display=False,text="OR M2")
+    read(final_neg_rule_or,0,display=False,text="OR M2")
 
-    pos_rule_acc = score(df_pos_test,final_pos_rule,1)
-    neg_rule_acc = score(df_neg_test,final_neg_rule,0)
+    final_pos_rule_and = union_AND(union_positive)
+    final_neg_rule_and = union_AND(union_negative)
+    read(final_pos_rule_and,1,display=False,text="AND M2")
+    read(final_neg_rule_and,0,display=False,text="AND M2")
+
+    final_pos_rule_ave = union_ave(union_positive)
+    final_neg_rule_ave = union_ave(union_negative)
+    read(final_pos_rule_ave,1,display=False,text="AVE M2")
+    read(final_neg_rule_ave,0,display=False,text="AVE M2")
+
+    pos_rule_acc_or = score(df_pos_test,final_pos_rule_or,1)
+    neg_rule_acc_or = score(df_neg_test,final_neg_rule_or,0)
+
+    pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
+    neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
+
+    pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
+    neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
 
     if log_result:
-        log(final_neg_rule,neg_rule_acc,"neg_final")
-        log(final_pos_rule,pos_rule_acc,"pos_final")
+        log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
+        log(final_pos_rule_or,pos_rule_acc_or,"pos_final")
 
-    print(f"Postive : {pos_rule_acc * 100} %")
-    print(f"Negative : {neg_rule_acc * 100} %")
 
-    print(f"Overall : {(pos_rule_acc + neg_rule_acc)/2 * 100} %")
+    print(f"Postive OR: {pos_rule_acc_or * 100} %")
+    print(f"Negative OR: {neg_rule_acc_or * 100} %")
+    print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
+
+    print("\n---------------------------------------\n")
+
+    
+    print(f"Postive and: {pos_rule_acc_and * 100} %")
+    print(f"Negative and: {neg_rule_acc_and * 100} %")
+    print(f"Overall and: {(pos_rule_acc_and + neg_rule_acc_and)/2 * 100} %")
+
+    print("\n---------------------------------------\n")
+
+    print(f"Postive Ave: {pos_rule_acc_ave * 100} %")
+    print(f"Negative Ave: {neg_rule_acc_ave * 100} %")
+    print(f"Overall Ave: {(pos_rule_acc_ave + neg_rule_acc_ave)/2 * 100} %")
 
 
 if __name__ == "__main__":
     start_time = time.time()
-    # method1()
-    method2(log_result=True)
+    method1()
+    # method2(log_result=False)
 
     print("\n--------------------------------------------\n")
     print(f"\nTotal execution time : { round((time.time() - start_time)/60,2) } min")

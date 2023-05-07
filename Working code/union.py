@@ -74,14 +74,14 @@ def union_AND(rules):
 
 def union_ave(rules):
     final_rule = {
-        0 : [0,0],
-        3 : [0,0],
-        6 : [0,0],
-        9 : [0,0],
-        12 : [0,0],
-        15 : [0,0],
-        18 : [0,0],
-        21 : [0,0]
+        0 : [0,0,0],
+        3 : [0,0,0],
+        6 : [0,0,0],
+        9 : [0,0,0],
+        12 : [0,0,0],
+        15 : [0,0,0],
+        18 : [0,0,0],
+        21 : [0,0,0]
     }
 
     for rule in rules:
@@ -89,16 +89,17 @@ def union_ave(rules):
             if(rule[i] >= cutoff):
                 lb = min(rule[i + 1],rule[i + 2])
                 ub = max(rule[i + 1],rule[i + 2])
-                final_rule[i][0] = (final_rule[i][0] + lb)/2 
-                final_rule[i][1] = (final_rule[i][0] + ub)/2
+                final_rule[i][0] += (final_rule[i][0] + lb) 
+                final_rule[i][1] += (final_rule[i][0] + ub)
+                final_rule[i][2] += 1
 
     final_rule_vector = [i for i in range(24)]
 
     for k,v in final_rule.items():
         if(v[0] != 0 and v[1] != 0):
             final_rule_vector[k] = 1
-            final_rule_vector[k + 1] = v[0]
-            final_rule_vector[k + 2] = v[1]
+            final_rule_vector[k + 1] = v[0]/v[2]
+            final_rule_vector[k + 2] = v[1]/v[2]
         else:
             final_rule_vector[k] = 0
             final_rule_vector[k + 1] = 0
