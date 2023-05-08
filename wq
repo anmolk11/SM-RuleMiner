@@ -1,0 +1,608 @@
+[33mcommit ddec740088154c2c6903c57a560e98f4a5a1f0e9[m[33m ([m[1;36mHEAD -> [m[1;32mbootstrap[m[33m)[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Apr 28 16:24:35 2023 +0530
+
+    minor changes
+
+[33mcommit 646c1f2276f70c628c21cec422aadcd7a650ca98[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Apr 28 16:23:24 2023 +0530
+
+    logs updated
+
+[33mcommit a126df88e9d84f84e3662252eef7c288f82ae3db[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Apr 27 16:50:49 2023 +0530
+
+    logs updated
+
+[33mcommit b252ee2c521e23e562dc2ed61235e4bd74269f76[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Apr 26 03:45:30 2023 +0530
+
+    notebook updated
+
+[33mcommit 0028a0afbb813e3638fa1a827d90ad445df23d67[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Apr 26 03:43:15 2023 +0530
+
+    Logs updated
+
+[33mcommit e93a92fb09d44f2c506ce2b35289a9247383d0cb[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Apr 26 03:42:17 2023 +0530
+
+    EDA on data done
+
+[33mcommit 507e61ad0581eff4a658a98aaebdf940ad038946[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Apr 26 01:14:36 2023 +0530
+
+    Logs updated
+
+[33mcommit b43ff94753e19d30e6fca60e289b05d602f09373[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Tue Apr 25 02:39:35 2023 +0530
+
+    Logs updated
+
+[33mcommit 8a8b7f4f56adb4b39448f2a1411f74bc8295f207[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Apr 22 01:56:14 2023 +0530
+
+    added code for logging
+
+[33mcommit 82434529a85034522220fc74488b1ecfaa64d7e3[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Apr 21 00:37:38 2023 +0530
+
+    reorganize
+
+[33mcommit f422104e324322538925716a85280cb5f04da3cd[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Apr 20 23:50:42 2023 +0530
+
+    added methods for union
+
+[33mcommit f5fdc54840cb93fa09260b7a46a35be42380c840[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Apr 12 02:42:11 2023 +0530
+
+    both method working
+
+[33mcommit f9ea8520c1dd9b78fed7b45df2430d030762c432[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Apr 10 14:50:39 2023 +0530
+
+    major changes made
+
+[33mcommit c537be55ec94190d49297472d73eb884ddacf09d[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Apr 10 01:51:19 2023 +0530
+
+    union done
+
+[33mcommit 548c779e74723376e1d84b4e8bc59c72db222168[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Apr 8 16:16:07 2023 +0530
+
+    bootstrapping done
+
+[33mcommit 2d1584c5e43d0aaf62fe57d5a8dad542b3e1f9ed[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Apr 8 03:07:14 2023 +0530
+
+    made the main smo a function
+
+[33mcommit 1a5c7a813a51c31682c92168740407152abb652c[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Apr 8 02:29:01 2023 +0530
+
+    making modifications for bootstrapping
+
+[33mcommit e33568d002eb034a6c8cc9feb3afb860e084027f[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Apr 8 02:07:49 2023 +0530
+
+    added architecture of RuleMiner
+
+[33mcommit 27477d14d8019ff43f3adc182b13a03d8d8b861a[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Apr 6 23:41:43 2023 +0530
+
+    minor changes
+
+[33mcommit 49e1a801554c4f7e9412f10595fae259c4a9fb40[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Mar 16 00:24:27 2023 +0530
+
+    minor changes
+
+[33mcommit 3c1d52456f9b8045760ea63b77c60ec727ee2b30[m
+Merge: 30e92ef eacc6fe
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Mar 15 22:10:19 2023 +0530
+
+    Merge branch 'fitness'
+
+[33mcommit eacc6feea078d01b86583d061ec39ac715dfa820[m[33m ([m[1;31morigin/fitness[m[33m)[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Mar 15 22:08:41 2023 +0530
+
+    Cleaned the log
+
+[33mcommit 026a7bb14f537d76950e2883874b699321ca438b[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Mar 5 20:04:29 2023 +0530
+
+    Logs updated
+
+[33mcommit 950024ee85b96800ebaba6e5397b7e1cf2ad8477[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Mar 5 18:38:48 2023 +0530
+
+    readme updated
+
+[33mcommit 8b1249940c5250e039b908eafaf4f08112122d74[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Mar 5 18:35:56 2023 +0530
+
+    added a requirement file
+
+[33mcommit f618ab30dfa7a8da9c3157e18df2c2bd086ca9a5[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sun Mar 5 02:59:51 2023 +0530
+
+    Rename Working code/data/diabetes.csv to Working code/Data/diabetes.csv
+
+[33mcommit 17613205ad6097f35e7a8c56439e7dcdf6e7bae7[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sun Mar 5 02:58:52 2023 +0530
+
+    Rename Working code/data/df_pos_train.csv to Working code/Data/df_pos_train.csv
+
+[33mcommit 2f2cd72d0e97fc25675e7aa05757fb450041450d[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sun Mar 5 02:58:15 2023 +0530
+
+    Rename Working code/data/df_pos_test.csv to Working code/Data/df_pos_test.csv
+
+[33mcommit a62aeaa573edf4984711886c2d03a9c73e051e7c[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sun Mar 5 02:57:52 2023 +0530
+
+    Rename Working code/data/df_neg_test.csv to Working code/Data/df_neg_test.csv
+
+[33mcommit 10005b4e5eeb83e61f9e2e8905180366351e8975[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sun Mar 5 02:56:31 2023 +0530
+
+    Rename Working code/data/df_neg_train.csv to Working code/Data/df_neg_train.csv
+
+[33mcommit bb2da3a8faef6863c5937a112dba5d0275e51301[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Mar 5 02:54:02 2023 +0530
+
+    Minor changes
+
+[33mcommit 5bcb97aa31c1f9205961878ffa1349d18c7f0991[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Mar 4 21:21:52 2023 +0530
+
+    Logs updated
+
+[33mcommit 2aed39dc41ddae7651d8ee51a81475a750109211[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Mar 4 21:16:05 2023 +0530
+
+    Fixed the mistakes in MIR function
+
+[33mcommit 0f6408eaea9bb1a9027d9093244465ab94009b00[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Mar 4 21:14:34 2023 +0530
+
+    Logs updated
+
+[33mcommit a17981a439334f483e878dcbfb56798b28fcd9d6[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Mar 3 16:48:08 2023 +0530
+
+    Log updated
+
+[33mcommit a221c5644cb830ef8d2bc111100fa465b059d596[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Mar 3 16:26:57 2023 +0530
+
+    added progress bar
+
+[33mcommit 028aff3963035b635fa737b83dbb4819cc69da84[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Mar 3 04:12:18 2023 +0530
+
+    Log updated
+
+[33mcommit 9e99da64e9334e19d32e6a0b06a59c42377c2cb3[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Mar 3 02:28:29 2023 +0530
+
+    working on new fitness function
+
+[33mcommit 71201942273aee27c68c1d0f455b8171e9c808ac[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Mar 2 18:38:50 2023 +0530
+
+    made it ready to test differnt fitness functions
+
+[33mcommit 3f64a730536dd402471af46bbf8fe86bdb14cc05[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Mar 2 16:31:00 2023 +0530
+
+    Log updated
+
+[33mcommit 30e92ef094cee995ccfb6aeefd507b3e1eb195d5[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Mar 2 16:12:59 2023 +0530
+
+    added files to be ignored
+
+[33mcommit 95c188c5279f2398ddb88bdaf8fb3cada95975cf[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Mar 2 15:56:13 2023 +0530
+
+    Log updated
+
+[33mcommit 535b543dd3c480b246924f0680e919142ce633b4[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 22 16:42:16 2023 +0530
+
+    Log updated
+
+[33mcommit d656a82c0b5c2f8f545df9bb21ca0363b579d0bd[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 22 16:38:27 2023 +0530
+
+    script updated
+
+[33mcommit a7f918b9d975af310c9b02c463b8c638ca9113cb[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 22 16:35:53 2023 +0530
+
+    added a excel log files for rules
+
+[33mcommit cd9edac0b8bce2a6dff3adeaae9647390b19c87a[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 22 15:51:04 2023 +0530
+
+    Log updated
+
+[33mcommit 7bc9585400b02aca01841227774faef50e43c866[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 20 16:07:51 2023 +0530
+
+    Log updated
+
+[33mcommit db14cee444f96355e08a70d2670f3555d94e9923[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 15 16:28:07 2023 +0530
+
+    Notebook updated
+
+[33mcommit 5931884febc14573ea871fb49371f106e0adb5f7[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 15 16:00:37 2023 +0530
+
+    Log updated
+
+[33mcommit 419ad28f16287e1afb8e5b98eb1ce6355502aeef[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 15 15:54:59 2023 +0530
+
+    chanded loop from 10 to 5
+
+[33mcommit fbed3829a1a1c02ede4228bb3f60ea06a0c65b8a[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 15 03:20:11 2023 +0530
+
+    Log updated
+
+[33mcommit 9bef1df017d29f218d85bbf0ac784e3a0b121197[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 19:58:12 2023 +0530
+
+    updating script for auto log entry after n runs
+
+[33mcommit 084b592e9410d0c79db2dc8c3ed0640b68b95e3d[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 19:57:33 2023 +0530
+
+    D log.sh
+
+[33mcommit fde5839fafdbd3488be74f6eed09890cc0c6ffbd[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 19:55:58 2023 +0530
+
+    Log updated
+
+[33mcommit b864ef1c7ea0b5587eb029e17f6c77b8ae0b66d7[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 19:39:32 2023 +0530
+
+    added a shell code for log updation
+
+[33mcommit dd1c3573ca24092489c648392bc48decdc851d2d[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 19:38:12 2023 +0530
+
+    Log updated
+
+[33mcommit 64e7e9c8294f59dbc0d46c716fc47893bcd17674[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 16:47:59 2023 +0530
+
+    Log Updated
+
+[33mcommit 4a50d978f2f9c72076464ee3dba17785ef439141[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 15:22:03 2023 +0530
+
+    added log for rules
+
+[33mcommit 79360e49a97904603df57e6252426eb7ded99e11[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 13 15:08:32 2023 +0530
+
+    Log updated
+
+[33mcommit 8720dc6a558a25214d10869f1ccfd3d41acf505b[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Feb 11 18:44:23 2023 +0530
+
+    Updated log
+
+[33mcommit f52947b840f4a12afe150c0f9dfdd457d5ad52a0[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Feb 11 18:42:22 2023 +0530
+
+    added a shell script to re-run the main code n times
+
+[33mcommit 3e2dd6aa78f3db35c00cc29019f55f4eeb3f12d9[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Sat Feb 11 01:05:03 2023 +0530
+
+    Delete log.txt
+
+[33mcommit 6760925721ab78c0f25f68457fc4673a11e76a44[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Feb 11 01:04:17 2023 +0530
+
+    updated todo
+
+[33mcommit aa04f171dabb03eabd5082ddf136290ab75bce12[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Feb 11 01:02:05 2023 +0530
+
+    now returning avg and best accuracy
+
+[33mcommit 0bd87211fc3c4e7a9d2a4dcf79564f8634011291[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sat Feb 11 01:00:40 2023 +0530
+
+    added a log file
+
+[33mcommit c80b7e4edfa634cad0f9193a94278f3bc68a1df4[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 16:11:06 2023 +0530
+
+    Update README.md
+
+[33mcommit 14208564d7cd1520d3cd5bb7fd3ca94289a9aa0b[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 16:09:12 2023 +0530
+
+    Update README.md
+
+[33mcommit 06bf5a8a1969671745d0dead6e8b57da5d9f9f91[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 15:55:31 2023 +0530
+
+    Update README.md
+
+[33mcommit f3ff7c9c01da5dd425e358a935df369f4e34a5d7[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 15:54:23 2023 +0530
+
+    Create README.md
+
+[33mcommit 5e3eca4e0c8946d844543b5b3c46447ab23d42df[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 15:51:06 2023 +0530
+
+    Delete README.md
+
+[33mcommit 551c6346e9575ad499385418058464a404aabf61[m
+Author: anmolk11 <79657826+anmolk11@users.noreply.github.com>
+Date:   Fri Feb 10 15:50:39 2023 +0530
+
+    Create README.md
+
+[33mcommit f51f3259381b7608bc899547affd1821e945af28[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Feb 10 15:44:10 2023 +0530
+
+    void
+
+[33mcommit cb686ea77308758427d27f35bc83d65c5b77d9fb[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Feb 10 15:42:52 2023 +0530
+
+    m
+
+[33mcommit 6312e76034db4913a18219c0bf1375f147d87ef2[m[33m ([m[1;31morigin/testing_new[m[33m)[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Feb 10 15:23:10 2023 +0530
+
+    fixed the bug in testing method and added a notebook for trial
+
+[33mcommit 8704fabd73e6b277832c48abd0d3f1b3d1417717[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 9 18:14:01 2023 +0530
+
+    need to fix testing method
+
+[33mcommit faf1d7f6e8a199761bf19aaac7b18eee412ed5c6[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 9 15:48:04 2023 +0530
+
+    fixed all the bugs
+
+[33mcommit 464cee779cc01525259262ca4e4fbf3d76a217bd[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 8 16:47:49 2023 +0530
+
+    Fixed the novel fitness function
+
+[33mcommit 0955615e22634299de5c65beb1279517d8e68b2a[m
+Merge: 79d5d93 200447c
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 8 13:24:33 2023 +0530
+
+    Merge branch 'main' of https://github.com/anmolk11/SM-RuleMiner into testing_new
+
+[33mcommit 200447cbdd40f29ff906d6e2b7a14aa8e5d47f40[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 6 18:29:19 2023 +0530
+
+    updated todo
+
+[33mcommit 79d5d933890e25d54809d0d1f8345084445d1fba[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 6 18:25:03 2023 +0530
+
+    testing and training done
+
+[33mcommit 0007dd6c5ee767833785e8d32bd50c098517713b[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 6 16:43:44 2023 +0530
+
+    changed Tp,Tn,Fp,Fn
+
+[33mcommit 919415fb3d6fd413b726f5a2277d3185b3597ff9[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Feb 6 14:32:49 2023 +0530
+
+    working for both classes
+
+[33mcommit d069f2aa7c4afcb44e6d517639763e3ba3782a02[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Feb 3 16:18:26 2023 +0530
+
+    Started working on spliting the data into training and testing
+
+[33mcommit 3078eb28e607a8821647afaee07531139472d2f0[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Fri Feb 3 14:34:47 2023 +0530
+
+    fixed some bugs
+
+[33mcommit 70867ab0c5bde7769baadb9d8e20d4f1045d528a[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 2 20:02:21 2023 +0530
+
+    updated log
+
+[33mcommit 29c1259e74ef8d5f9caec552e8b5ff8c0ccfb0f9[m
+Merge: 1376ccb a4bb370
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 2 19:58:16 2023 +0530
+
+    Merge branch 'testing_new'
+
+[33mcommit a4bb37024a1cdb62bbc375aeacf663b3fab10fc8[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 2 19:51:43 2023 +0530
+
+    Fixed a major bug,working for both classes now
+
+[33mcommit 2023b2b3cf631e34a8b80e13d8d7aa490a2f7746[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Thu Feb 2 18:05:50 2023 +0530
+
+    Made changes in looping over dataset.
+
+[33mcommit 1376ccb2d064c78e70842f904a341c1c96a2fc14[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 1 20:47:52 2023 +0530
+
+    added a log file
+
+[33mcommit 3c6dab96e6ab3f50451557fd3db94d6f417b2e9d[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 1 20:43:57 2023 +0530
+
+    minor change
+
+[33mcommit 8fe8f26115fb9aadff7a3e6d006e259d0503635a[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 1 19:45:48 2023 +0530
+
+    deleted old Test folder
+
+[33mcommit e1dbcff16cc6e4959593c1bbad23a65bb924d488[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 1 19:43:44 2023 +0530
+
+    fixed minor bugs
+
+[33mcommit 783bc6cffa0c90a9654ab8c4a173ff6aa39cc2d9[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Wed Feb 1 19:13:04 2023 +0530
+
+    All the code is in python now, and is working for positive class rule mining
+
+[33mcommit f8f88a93c3c8dfd8d278e47e0aaa4b694a7aca0b[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Tue Jan 31 16:31:52 2023 +0530
+
+    Shifted sll the old code to Old code folder
+
+[33mcommit eab99ebaa1914b52054e00d99710852eb8055478[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Tue Jan 31 16:29:47 2023 +0530
+
+    keeping all the old code in Old Code folder
+
+[33mcommit 8963f59e5a8caed3a4b8326c60f30059687d87d3[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Jan 30 17:43:43 2023 +0530
+
+    changed iloc to loc in
+
+[33mcommit c1ba3cc420a88eccc49bc3444813917edb9984be[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Jan 30 16:58:30 2023 +0530
+
+    adding a jupyter notebook for testing purpose
+
+[33mcommit 7bb2a5bcde8f49b371f85071a2992b137786f852[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Mon Jan 30 15:12:25 2023 +0530
+
+    updated the redo module and added some rule in run module but the csv file is not getting updated
+
+[33mcommit 7c4ff1fb44b1a1d04080edcb67eb3c47c6c7ecfb[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Jan 29 16:45:54 2023 +0530
+
+    Testing looping part
+
+[33mcommit 85de89dde3afe6daf137a957c3ea1ec2ce092337[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Jan 29 15:48:04 2023 +0530
+
+    fitness function updated to novel fitness function
+
+[33mcommit cef21ea1de4bf54e775acf04fc22b0538c89e102[m
+Author: anmolk11 <akcp.cpp@gmail.com>
+Date:   Sun Jan 29 00:53:06 2023 +0530
+
+    orignal code

@@ -217,8 +217,8 @@ def method2(log_result = True):
 
 if __name__ == "__main__":
     start_time = time.time()
-    method1()
-    # method2(log_result=False)
+    # method1()
+    method2(log_result=False)
 
     print("\n--------------------------------------------\n")
     print(f"\nTotal execution time : { round((time.time() - start_time)/60,2) } min")
