@@ -16,6 +16,7 @@ def score(df,rule,sign):
     rule = makeMonkey(rule) 
     hits = 0
     N = df.shape[0]
+    predicted_labels = []
     for ind,row in df.iterrows():
         rule_sat = True
         for k,v in rule.items():
@@ -27,7 +28,10 @@ def score(df,rule,sign):
                     break
         if rule_sat:
             hits += 1
-    return hits/N
+            predicted_labels.append(sign)
+        else:
+            predicted_labels.append(1 - sign)
+    return hits/N,predicted_labels
 
 def accuracy(df,rule_set,sign):
     acc = 0

@@ -12,6 +12,7 @@ from read_rule import read
 from test import score
 from log import log 
 from preprocess import *
+from confusion_mat import compute_confusion_matrix
 
 ratio = 0.2
 bootstraps = 5
@@ -39,7 +40,7 @@ def pickBest(ruleset,df,sign):
     best = 0
     pick = []
     for rule in ruleset:
-        scr = score(df,rule,sign)
+        scr,pred = score(df,rule,sign)
         if scr > best:
             best = scr
             pick = rule
@@ -157,24 +158,31 @@ def method2(log_result = True):
     read(final_pos_rule_or,1,display=False,text="OR M2")
     read(final_neg_rule_or,0,display=False,text="OR M2")
 
-    final_pos_rule_and = union_AND(union_positive)
-    final_neg_rule_and = union_AND(union_negative)
-    read(final_pos_rule_and,1,display=False,text="AND M2")
-    read(final_neg_rule_and,0,display=False,text="AND M2")
+    # final_pos_rule_and = union_AND(union_positive)
+    # final_neg_rule_and = union_AND(union_negative)
+    # read(final_pos_rule_and,1,display=False,text="AND M2")
+    # read(final_neg_rule_and,0,display=False,text="AND M2")
 
-    final_pos_rule_ave = union_ave(union_positive)
-    final_neg_rule_ave = union_ave(union_negative)
-    read(final_pos_rule_ave,1,display=False,text="AVE M2")
-    read(final_neg_rule_ave,0,display=False,text="AVE M2")
+    # final_pos_rule_ave = union_ave(union_positive)
+    # final_neg_rule_ave = union_ave(union_negative)
+    # read(final_pos_rule_ave,1,display=False,text="AVE M2")
+    # read(final_neg_rule_ave,0,display=False,text="AVE M2")
 
-    pos_rule_acc_or = score(df_pos_test,final_pos_rule_or,1)
-    neg_rule_acc_or = score(df_neg_test,final_neg_rule_or,0)
+    pos_rule_acc_or,pred_pos = score(df_pos_test,final_pos_rule_or,1)
+    neg_rule_acc_or,pred_neg = score(df_neg_test,final_neg_rule_or,0)
 
-    pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
-    neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
+    pos_true = df_pos_test.shape[0] * [1] 
+    neg_true = df_neg_test.shape[0] * [0] 
 
-    pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
-    neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
+    cm, classes, accuracy_pos, precision_pos, recall_pos, f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
+    cm, classes, accuracy_neg, precision_neg, recall_neg, f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
+        
+
+    # pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
+    # neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
+
+    # pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
+    # neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
 
     if log_result:
         log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
@@ -182,21 +190,35 @@ def method2(log_result = True):
 
 
     print(f"Postive OR: {pos_rule_acc_or * 100} %")
+    print(f"Accuracy: {accuracy_pos}")
+    print(f"Precision: {precision_pos}")
+    print(f"Recall: {recall_pos}")
+    print(f"F1-Score: {f1_score_pos}")
+    print("\n---------------------------------------\n")
+
     print(f"Negative OR: {neg_rule_acc_or * 100} %")
+    print(f"Accuracy: {accuracy_neg}")
+    print(f"Precision: {precision_neg}")
+    print(f"Recall: {recall_neg}")
+    print(f"F1-Score: {f1_score_neg}")
+    print("\n---------------------------------------\n")    
+
     print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
 
-    print("\n---------------------------------------\n")
+
+    # print("\n---------------------------------------\n")
 
     
-    print(f"Postive and: {pos_rule_acc_and * 100} %")
-    print(f"Negative and: {neg_rule_acc_and * 100} %")
-    print(f"Overall and: {(pos_rule_acc_and + neg_rule_acc_and)/2 * 100} %")
+    
+    # print(f"Postive and: {pos_rule_acc_and * 100} %")
+    # print(f"Negative and: {neg_rule_acc_and * 100} %")
+    # print(f"Overall and: {(pos_rule_acc_and + neg_rule_acc_and)/2 * 100} %")
 
-    print("\n---------------------------------------\n")
+    # print("\n---------------------------------------\n")
 
-    print(f"Postive Ave: {pos_rule_acc_ave * 100} %")
-    print(f"Negative Ave: {neg_rule_acc_ave * 100} %")
-    print(f"Overall Ave: {(pos_rule_acc_ave + neg_rule_acc_ave)/2 * 100} %")
+    # print(f"Postive Ave: {pos_rule_acc_ave * 100} %")
+    # print(f"Negative Ave: {neg_rule_acc_ave * 100} %")
+    # print(f"Overall Ave: {(pos_rule_acc_ave + neg_rule_acc_ave)/2 * 100} %")
 
 
 if __name__ == "__main__":
