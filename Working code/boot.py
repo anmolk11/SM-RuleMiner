@@ -11,32 +11,16 @@ from union import *
 from read_rule import read
 from test import score
 from log import log 
+from preprocess import *
 
 ratio = 0.2
 bootstraps = 5
 
-
 whole_data = pd.read_csv("Data/diabetes.csv")
 col = whole_data.columns.tolist()
 
-X = whole_data[col[:-1]]
-y = whole_data["Outcome"]
-
-# ros = RandomOverSampler()
-# X_resampled, y_resampled = ros.fit_resample(X, y)
-
-smote = SMOTE()
-X_resampled, y_resampled = smote.fit_resample(X, y)
-
-# adasyn = ADASYN()
-# X_resampled, y_resampled = adasyn.fit_resample(X, y)
-
-
-X_resampled_df = pd.DataFrame(X_resampled, columns=X.columns)
-y_resampled_df = pd.DataFrame(y_resampled, columns=['Outcome'])
-
-whole_data = pd.concat([X_resampled_df, y_resampled_df], axis=1)
-
+whole_data = handle_outliers(whole_data)
+whole_data = over_sample(whole_data)
 
 positive_data = whole_data[whole_data["Outcome"] == 1]
 negative_data = whole_data[whole_data["Outcome"] == 0]
