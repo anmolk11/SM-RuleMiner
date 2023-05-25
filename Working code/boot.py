@@ -12,7 +12,7 @@ from read_rule import read
 from test import score
 from log import log 
 from preprocess import *
-from confusion_mat import compute_confusion_matrix
+from confusion_mat import *
 
 ratio = 0.2
 bootstraps = 5
@@ -174,15 +174,21 @@ def method2(log_result = True):
     pos_true = df_pos_test.shape[0] * [1] 
     neg_true = df_neg_test.shape[0] * [0] 
 
-    cm, classes, accuracy_pos, precision_pos, recall_pos, f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
-    cm, classes, accuracy_neg, precision_neg, recall_neg, f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
+    cm_pos, classes, accuracy_pos, precision_pos, recall_pos, f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
+    cm_neg, classes, accuracy_neg, precision_neg, recall_neg, f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
         
+
+    overall = merge_confusion_matrices(cm_pos,cm_neg)
+
+    accuracy_all, precision_all, recall_all, f1_score_all = compute_evaluation_metrics(overall)
 
     # pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
     # neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
 
     # pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
     # neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
+
+
 
     if log_result:
         log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
@@ -204,7 +210,10 @@ def method2(log_result = True):
     print("\n---------------------------------------\n")    
 
     print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
-
+    print(f"Accuracy: {accuracy_all}")
+    print(f"Precision: {precision_all}")
+    print(f"Recall: {recall_all}")
+    print(f"F1-Score: {f1_score_all}")
 
     # print("\n---------------------------------------\n")
 
