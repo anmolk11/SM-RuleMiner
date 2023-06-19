@@ -35,6 +35,8 @@ Y_neg = negative_data[col[-1]]
 df_pos_train, df_pos_test, y_pos_train, y_pos_test = train_test_split(X_pos, Y_pos, test_size= ratio, random_state=0)
 df_neg_train, df_neg_test, y_neg_train, y_neg_test = train_test_split(X_neg, Y_neg, test_size= ratio, random_state=0) 
 
+pos_true = df_pos_test.shape[0] * [1] 
+neg_true = df_neg_test.shape[0] * [0]
 
 def pickBest(ruleset,df,sign):
     best = 0
@@ -47,6 +49,42 @@ def pickBest(ruleset,df,sign):
 
     return pick,best
 
+def printResults(type,pred_pos,pred_neg):
+    print(type,end="\n--------\n")
+    cm_pos, classes, accuracy_pos, precision_pos, recall_pos,specificity_pos,f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
+    cm_neg, classes, accuracy_neg, precision_neg, recall_neg,specificity_neg,f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
+    overall = merge_confusion_matrices(cm_pos,cm_neg)
+    accuracy_all, precision_all, recall_all, specificity_all,f1_score_all = compute_evaluation_metrics(overall)
+
+    # print("Positive\n")
+    # print(cm_pos,end="\n\n")
+    # print(f"Accuracy: {accuracy_pos}")
+    # print(f"Precision: {precision_pos}")
+    # print(f"Recall/Sensitivity : {recall_pos}")
+    # print(f"Specificity: {specificity_pos}")
+    # print(f"F1-Score: {f1_score_pos}")
+    # print("\n---------------------------------------\n")
+
+    # print("Negative\n")
+    # print(cm_neg,end="\n\n")
+    # print(f"Accuracy: {accuracy_neg}")
+    # print(f"Precision: {precision_neg}")
+    # print(f"Recall/Sensitivity: {recall_neg}")
+    # print(f"Specificity: {specificity_neg}")
+    # print(f"F1-Score: {f1_score_neg}")
+    # print("\n---------------------------------------\n")    
+
+    print("Overall\n")
+    print(overall,end="\n\n")
+    # print(f"Accuracy: {accuracy_all}")
+    # print(f"Precision: {precision_all}")
+    # print(f"Recall/Sensitivity: {recall_all}")
+    # print(f"Specificity: {specificity_all}")
+    # print(f"F1-Score: {f1_score_all}")
+
+    print("\n---------------------------------------\n")
+
+    pass
 
 def method1():
     """  
@@ -155,8 +193,8 @@ def method2(log_result = True):
 
     final_pos_rule_or = union_OR(union_positive)
     final_neg_rule_or = union_OR(union_negative)
-    read(final_pos_rule_or,1,display=False,text="OR M2")
-    read(final_neg_rule_or,0,display=False,text="OR M2")
+    # read(final_pos_rule_or,1,display=False,text="OR M2")
+    # read(final_neg_rule_or,0,display=False,text="OR M2")
 
     # final_pos_rule_and = union_AND(union_positive)
     # final_neg_rule_and = union_AND(union_negative)
@@ -168,66 +206,30 @@ def method2(log_result = True):
     # read(final_pos_rule_ave,1,display=False,text="AVE M2")
     # read(final_neg_rule_ave,0,display=False,text="AVE M2")
 
+    # pos_rule_acc_or,pred_pos = score(df_pos_test,final_pos_rule_or,1)
+    # neg_rule_acc_or,pred_neg = score(df_neg_test,final_neg_rule_or,0)
+
+     
+
+    
+
     pos_rule_acc_or,pred_pos = score(df_pos_test,final_pos_rule_or,1)
     neg_rule_acc_or,pred_neg = score(df_neg_test,final_neg_rule_or,0)
-
-    pos_true = df_pos_test.shape[0] * [1] 
-    neg_true = df_neg_test.shape[0] * [0] 
-
-    cm_pos, classes, accuracy_pos, precision_pos, recall_pos, f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
-    cm_neg, classes, accuracy_neg, precision_neg, recall_neg, f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
-        
-
-    overall = merge_confusion_matrices(cm_pos,cm_neg)
-
-    accuracy_all, precision_all, recall_all, f1_score_all = compute_evaluation_metrics(overall)
-
-    # pos_rule_acc_and = score(df_pos_test,final_pos_rule_and,1)
-    # neg_rule_acc_and = score(df_neg_test,final_neg_rule_and,0)
 
     # pos_rule_acc_ave = score(df_pos_test,final_pos_rule_ave,1)
     # neg_rule_acc_ave = score(df_neg_test,final_neg_rule_ave,0)
 
+    # if log_result:
+    #     log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
+    #     log(final_pos_rule_or,pos_rule_acc_or,"pos_final")
 
 
-    if log_result:
-        log(final_neg_rule_or,neg_rule_acc_or,"neg_final")
-        log(final_pos_rule_or,pos_rule_acc_or,"pos_final")
-
-
-    print(f"Postive OR: {pos_rule_acc_or * 100} %")
-    print(f"Accuracy: {accuracy_pos}")
-    print(f"Precision: {precision_pos}")
-    print(f"Recall: {recall_pos}")
-    print(f"F1-Score: {f1_score_pos}")
-    print("\n---------------------------------------\n")
-
-    print(f"Negative OR: {neg_rule_acc_or * 100} %")
-    print(f"Accuracy: {accuracy_neg}")
-    print(f"Precision: {precision_neg}")
-    print(f"Recall: {recall_neg}")
-    print(f"F1-Score: {f1_score_neg}")
-    print("\n---------------------------------------\n")    
-
-    print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
-    print(f"Accuracy: {accuracy_all}")
-    print(f"Precision: {precision_all}")
-    print(f"Recall: {recall_all}")
-    print(f"F1-Score: {f1_score_all}")
-
-    # print("\n---------------------------------------\n")
-
-    
-    
-    # print(f"Postive and: {pos_rule_acc_and * 100} %")
-    # print(f"Negative and: {neg_rule_acc_and * 100} %")
-    # print(f"Overall and: {(pos_rule_acc_and + neg_rule_acc_and)/2 * 100} %")
-
-    # print("\n---------------------------------------\n")
-
-    # print(f"Postive Ave: {pos_rule_acc_ave * 100} %")
-    # print(f"Negative Ave: {neg_rule_acc_ave * 100} %")
-    # print(f"Overall Ave: {(pos_rule_acc_ave + neg_rule_acc_ave)/2 * 100} %")
+    printResults("Pick best & Union ave",pred_pos,pred_neg)
+    # print(f"Postive OR: {pos_rule_acc_or* 100} %")
+    # print(f"Negative OR: {neg_rule_acc_or * 100} %")
+    # # print("\n---------------------------------------\n")    
+    # print(f"Overall OR: {(pos_rule_acc_or + neg_rule_acc_or)/2 * 100} %")
+    # print("\n---------------------------------------\n")    
 
 
 if __name__ == "__main__":

@@ -17,10 +17,11 @@ def compute_confusion_matrix(true_labels, predicted_labels):
     accuracy = (tp + tn) / (tp + tn + fp + fn)
     precision = tp / (tp + fp)
     recall = tp / (tp + fn)
+    specificity = tn / (tn + fp)
     f1_score = 2 * (precision * recall) / (precision + recall)
 
     # Return confusion matrix and evaluation metrics
-    return cm, classes, accuracy, precision, recall, f1_score
+    return cm, classes, accuracy, precision, recall,specificity ,f1_score
 
 import numpy as np
 
@@ -44,8 +45,9 @@ def compute_evaluation_metrics(confusion_matrix):
     precision = true_positive / (true_positive + false_positive)
     recall = true_positive / (true_positive + false_negative)
     f1_score = 2 * (precision * recall) / (precision + recall)
+    specificity = true_negative/(true_negative + false_positive)
 
-    return accuracy, precision, recall, f1_score
+    return accuracy, precision, recall,specificity, f1_score
 
 
 
