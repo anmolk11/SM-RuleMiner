@@ -14,7 +14,7 @@ def handle_outliers(df):
     for column in numeric_columns:
         z_scores = (df[column] - df[column].mean()) / df[column].std()
         outliers = np.abs(z_scores) > z_threshold
-        df.loc[outliers, column] = df[column].median()  # Replace outliers with median value
+        df.loc[outliers, column] = df[column].median()  
 
     return df
 
