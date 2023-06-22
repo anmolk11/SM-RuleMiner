@@ -22,7 +22,7 @@ To run this project run
   git clone https://github.com/anmolk11/SM-RuleMiner.git 
   cd SM-RuleMiner/Working_code
   pip install -r requirements.txt
-  python boot.py
+  python main.py
 ```
 
 Rules will be saved in rules.txt file.
