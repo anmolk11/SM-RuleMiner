@@ -1,6 +1,7 @@
 import openpyxl
 import datetime
 import os
+import itertools
 
 cutoff = 0.5
 
@@ -29,3 +30,20 @@ def log(attr,accuracy,file_name):
         
     sheet.append([current_date_time] + attr + [accuracy])
     workbook.save(file_name)
+
+def log_confusion_mat(mat):
+    file_path = "Logs/confusion.xlsx"
+    mat = list(itertools.chain(*mat))
+    
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook.active
+    sheet.append(mat)
+    workbook.save(file_path)
+
+def log_MIR(len_0,len_1):
+    file_path = "Logs/MIR.xlsx"
+    workbook = openpyxl.load_workbook(file_path)
+    sheet = workbook.active
+    sheet.append([len_0,len_1])
+    workbook.save(file_path)
+        

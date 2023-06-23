@@ -10,12 +10,13 @@ from main import smo
 from union import *
 from read_rule import read
 from test import score
-from log import log 
+from log import * 
 from preprocess import *
 from confusion_mat import *
 
 ratio = 0.2
-bootstraps = 5
+bootstraps = 3
+
 
 whole_data = pd.read_csv("Data/diabetes.csv")
 col = whole_data.columns.tolist()
@@ -53,6 +54,10 @@ def printResults(type,pred_pos,pred_neg):
     print(type,end="\n--------\n")
     cm_pos, classes, accuracy_pos, precision_pos, recall_pos,specificity_pos,f1_score_pos = compute_confusion_matrix(pos_true,pred_pos)
     cm_neg, classes, accuracy_neg, precision_neg, recall_neg,specificity_neg,f1_score_neg = compute_confusion_matrix(neg_true,pred_neg)
+    
+    if cm_neg.shape != cm_pos.shape:
+        return [[-1,-1],[-1,-1]]
+
     overall = merge_confusion_matrices(cm_pos,cm_neg)
     accuracy_all, precision_all, recall_all, specificity_all,f1_score_all = compute_evaluation_metrics(overall)
 
@@ -61,7 +66,7 @@ def printResults(type,pred_pos,pred_neg):
 
     print("\n---------------------------------------\n")
 
-    pass
+    return overall
 
 def method1():
     """  
@@ -171,11 +176,20 @@ def method2(log_result = True):
     final_pos_rule_or = union_OR(union_positive)
     final_neg_rule_or = union_OR(union_negative)
 
+    pos_rule_len = calucale_len(final_pos_rule_or)
+    neg_rule_len = calucale_len(final_neg_rule_or)
+
+    log_MIR(neg_rule_len,pos_rule_len)
+
     pos_rule_acc_or,pred_pos = score(df_pos_test,final_pos_rule_or,1)
     neg_rule_acc_or,pred_neg = score(df_neg_test,final_neg_rule_or,0)
 
 
-    printResults("Pick best & Union ave",pred_pos,pred_neg)
+    final_confusion_mat = printResults("Pick best & Union ave",pred_pos,pred_neg)
+
+    log_confusion_mat(final_confusion_mat)
+
+
 
 if __name__ == "__main__":
     start_time = time.time()
