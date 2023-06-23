@@ -289,7 +289,7 @@ def smo(df,sign):
         initialize(cat,fitness_function)
         GlobalLearning(cat)
         LocalLearning(cat)
-        time.sleep(10)
+        # time.sleep(10)
         fevel = 0
         part = 1
         create_group(cat)
@@ -307,7 +307,7 @@ def smo(df,sign):
             LocalLearning(cat)
             LocalLeaderDecision(cat)
             GlobalLeaderDecision(cat)
-            time.sleep(10)
+            # time.sleep(10)
             if abs(GlobalMin - obj_val) <= acc_err:
                 break
 

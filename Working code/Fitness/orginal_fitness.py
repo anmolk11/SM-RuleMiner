@@ -59,15 +59,17 @@ def G_measure_ave(args,sign):
         
     recall = Tp/(Tp + Fn) if Tp > 0 else 0
     precision = Tp/(Tp + Fp) if Tp > 0 else 0
+    if precision + recall == 0:
+        return 0
+    F1_score = 2 * (precision * recall) / (precision + recall)
+    # G_measure_pos = math.sqrt(recall * precision)
     
-    G_measure_pos = math.sqrt(recall * precision)
+    # inverse_recall = Tn/(Tn + Fp) if Tn > 0 else 0
+    # inverse_precision = Tn/(Tn + Fn) if Tn > 0 else 0
     
-    inverse_recall = Tn/(Tn + Fp) if Tn > 0 else 0
-    inverse_precision = Tn/(Tn + Fn) if Tn > 0 else 0
+    # G_measure_neg = math.sqrt(inverse_recall * inverse_precision)
     
-    G_measure_neg = math.sqrt(inverse_recall * inverse_precision)
-    
-    return w1 * G_measure_pos + w2 * G_measure_neg
+    return F1_score
     
     
 # Mean Interval Range    
